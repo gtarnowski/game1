@@ -13,6 +13,7 @@ public class PlayerAttack extends Player {
         buildIdentity();
     }
     private void buildIdentity(){
+        //TODO: posprzątać
         Scanner sc = new Scanner(in);
 
         int res;
@@ -39,6 +40,7 @@ public class PlayerAttack extends Player {
     }
 
     private void buildCharacter(String player){
+        //TODO: do poprawki
         if(Objects.equals(player, profession[0])){
             //Mage stats
             hp = 60; mp = 60;
@@ -57,10 +59,11 @@ public class PlayerAttack extends Player {
         buildAttackStats(player);
     }
     private void calulateAttack(String [] multipier, int str, byte agi, byte vit, byte ene){
+        /// TODO: sprawdzić czy dobrze parsuje, Arraylist? albo loop?
         player.str = (byte) (str * Double.parseDouble(multipier[0].replaceAll(" ",".")));
-        player.str = (byte) (str * Double.parseDouble(multipier[1].replaceAll(" ",".")));
-        player.str = (byte) (str * Double.parseDouble(multipier[2].replaceAll(" ",".")));
-        player.str = (byte) (str * Double.parseDouble(multipier[3].replaceAll(" ",".")));
+        player.agi = (byte) (agi * Double.parseDouble(multipier[1].replaceAll(" ",".")));
+        player.vit = (byte) (vit * Double.parseDouble(multipier[2].replaceAll(" ",".")));
+        player.ene = (byte) (ene * Double.parseDouble(multipier[3].replaceAll(" ",".")));
     }
     private void buildAttackStats(String player ){
 
