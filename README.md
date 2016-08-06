@@ -12,3 +12,12 @@ each 1 LVL = 2 HP PNT
 each 1 VIT = 3 HP PNT  
 ##### MP: (start 10)  
 each 1 ENE = 1 MP PNT  
+
+
+	    int str = 32;
+        int min = 0;
+        int max= 0;
+        min = str / 6;
+        max = str /4;
+        out.println(max);
+        out.println("My damage is: " + min + " - " + max);

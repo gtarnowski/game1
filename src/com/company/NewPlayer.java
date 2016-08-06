@@ -7,17 +7,16 @@ import java.util.Scanner;
 import static java.lang.System.in;
 import static java.lang.System.out;
 
-public class PlayerAttack extends Player {
+public class NewPlayer extends Player {
     Player player = new Player();
     public void newGame(){
         buildIdentity();
+        buildCharacter();
+        calulateAttack();
     }
     private void buildIdentity(){
-        //TODO: posprzątać
         Scanner sc = new Scanner(in);
-
         int res;
-        String name,playerChoosedClass;
 
         out.println("Enter player name: ");
         player.name = sc.next();
@@ -35,45 +34,45 @@ public class PlayerAttack extends Player {
         }else {
             player.selectedClass =  profession[2];
         }
-
-        buildCharacter(player.selectedClass);
     }
 
-    private void buildCharacter(String player){
+    private void buildCharacter( ){
         //TODO: do poprawki
-        if(Objects.equals(player, profession[0])){
+        if(Objects.equals(player.selectedClass, profession[0])){
             //Mage stats
             hp = 60; mp = 60;
             str = 18; agi = 18; vit = 17;ene = 30;
         }
-        if(Objects.equals(player, profession[1])){
+        if(Objects.equals(player.selectedClass, profession[1])){
             //Warr stats
             hp = 110; mp = 20;
             str = 28; agi = 20; vit = 25;ene = 10;
         }
-        if(Objects.equals(player, profession[2])){
+        if(Objects.equals(player.selectedClass, profession[2])){
             //Arch stats
             hp = 80; mp = 30;
             str = 22; agi = 25; vit = 20;ene = 15;
         }
-        buildAttackStats(player);
     }
-    private void calulateAttack(String [] multipier, int str, byte agi, byte vit, byte ene){
-        /// TODO: sprawdzić czy dobrze parsuje, Arraylist? albo loop?
-        player.str = (byte) (str * Double.parseDouble(multipier[0].replaceAll(" ",".")));
-        player.agi = (byte) (agi * Double.parseDouble(multipier[1].replaceAll(" ",".")));
-        player.vit = (byte) (vit * Double.parseDouble(multipier[2].replaceAll(" ",".")));
-        player.ene = (byte) (ene * Double.parseDouble(multipier[3].replaceAll(" ",".")));
-    }
-    private void buildAttackStats(String player ){
-
-        if(Objects.equals(player, profession[0])){
-//            calulateAttack()
-        }else if(Objects.equals(player, profession[1])){
-
-        }else {
-
+    //musi byc odrebna metoda
+    private void calulateAttack(){
+        //TODO: wyliczyc odrebne staty
+        if(Objects.equals(player.selectedClass, profession[0])){
+            attack[0] = (byte) (player.str /4);
+            attack[1] = (byte) (player.str /6);
         }
 
+        //DK attack set - staty poprawne
+        if(Objects.equals(player.selectedClass, profession[1])){
+            attack[0] = (byte) (player.str /4);
+            attack[1] = (byte) (player.str /6);
+        }
+        //TODO: wyliczyc odrebne staty
+        //ARCH attack set
+        if(Objects.equals(player.selectedClass, profession[2])){
+            attack[0] = (byte) (player.str /4);
+            attack[1] = (byte) (player.str /6);
+        }
     }
+
 }

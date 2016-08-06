@@ -16,8 +16,7 @@ public class Player {
     protected byte ene;
     protected byte vit;
 
-    protected byte attackFrom;
-    protected byte attackTo;
+    protected byte [] attack;
 
     protected String name;
     protected String selectedClass;

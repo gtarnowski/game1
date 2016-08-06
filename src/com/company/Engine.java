@@ -7,7 +7,7 @@ import static java.lang.System.out;
 
 
 public class Engine {
-    PlayerAttack player = new PlayerAttack();
+    NewPlayer player = new NewPlayer();
 
     public void gameMenu() {
         Scanner sc = new Scanner(in);
