@@ -9,14 +9,20 @@ import static java.lang.System.out;
 
 public class Player {
 
+    protected byte lvl;
     protected byte hp;
     protected byte mp;
+
     protected byte str;
     protected byte agi;
     protected byte ene;
     protected byte vit;
 
     protected byte [] attack;
+    protected byte [] attackRange;
+    protected byte [] attackMagic;
+
+    protected byte def;
 
     protected String name;
     protected String selectedClass;
