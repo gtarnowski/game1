@@ -1,4 +1,4 @@
-package com.company;
+package com.company.Engine;
 
 import java.util.Objects;
 import java.util.Scanner;
@@ -18,9 +18,8 @@ public class Player {
     protected byte ene;
     protected byte vit;
 
-    protected byte [] attack;
-    protected byte [] attackRange;
-    protected byte [] attackMagic;
+    protected byte [] attack = new byte[2];
+    protected byte [] attackMagic = new byte[2];
 
     protected byte def;
 
