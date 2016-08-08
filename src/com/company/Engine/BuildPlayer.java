@@ -18,12 +18,12 @@ public class BuildPlayer extends Player {
         statsModifier.calculateStatByAgility(player);
         statsModifier.calculateStatByVitality(player);
         statsModifier.calculateStatByEnergy(player);
-        out.println("MIN: " + player.attackMagic[0]);
-        out.println("MAX: " + player.attackMagic[1]);
+        out.println("MIN Magic: " + player.attackMagic[0]);
+        out.println("MAX Magic: " + player.attackMagic[1]);
+        out.println("MIN Melee: " + player.attack[0]);
+        out.println("MAX Melee: " + player.attack[1]);
         out.println("DEF: " + player.def);
-        //TODO: liczy źle - do poprawki
         out.println("MP: " + player.mp);
-        //TODO: liczy źle - do poprawki
         out.println("HP: " + player.hp);
     }
 
@@ -52,7 +52,7 @@ public class BuildPlayer extends Player {
     private void buildCharacter(){
         if(Objects.equals(this.player.selectedClass, profession[0])){
             //Mage stats
-            this.player.str = 18; this.player.agi = 18; this.player.vit = 17;this.player.ene = 30;
+            this.player.str = 18; this.player.agi = 18; this.player.vit = 15;this.player.ene = 30;
         }
         if(Objects.equals(this.player.selectedClass, profession[1])){
             //Warr stats
