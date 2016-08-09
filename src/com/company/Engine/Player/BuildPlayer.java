@@ -1,5 +1,7 @@
-package com.company.Engine;
+package com.company.Engine.Player;
 
+
+import com.company.Gfx.Gfx;
 
 import java.util.Objects;
 import java.util.Scanner;
@@ -10,11 +12,12 @@ import static java.lang.System.out;
 public class BuildPlayer extends Player {
     Player player = new Player();
     StatsModifier statsModifier = new StatsModifier();
+    Gfx gfx = new Gfx();
 
     public void createCharacter(){
         buildIdentity();
         buildCharacter();
-        statsModifier.calculateStatByStrenght(player);
+        statsModifier.calculateStatByStrength(player);
         statsModifier.calculateStatByAgility(player);
         statsModifier.calculateStatByVitality(player);
         statsModifier.calculateStatByEnergy(player);
@@ -25,20 +28,20 @@ public class BuildPlayer extends Player {
         out.println("DEF: " + player.def);
         out.println("MP: " + player.mp);
         out.println("HP: " + player.hp);
+
+
     }
+
 
     private void buildIdentity(){
         Scanner sc = new Scanner(in);
         int res;
-        player.lvl =1;
+        player.lvl = 1;
 
-        out.println("Enter object name: ");
+        out.println("Enter player name: ");
         player.name = sc.next();
 
-        out.println("Choose object class: ");
-        out.println("1. " + profession[0]);
-        out.println("2. " + profession[1]);
-        out.println("3. " + profession[2]);
+        gfx.drawClassChoose();
         res = sc.nextInt();
 
         if(res == 1){

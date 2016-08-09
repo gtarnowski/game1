@@ -1,15 +1,13 @@
-package com.company.Engine;
+package com.company.Engine.Player;
 
-import com.company.Engine.Player;
+import com.company.Engine.Player.Player;
 
 import java.util.Objects;
-
-import static java.lang.System.out;
 
 
 public class  StatsModifier extends Player {
 
-    protected void calculateStatByStrenght(Player obj){
+    protected void calculateStatByStrength(Player obj){
         //DK attack set - staty poprawne
         if(Objects.equals(obj.selectedClass, profession[1])){
             obj.attack[0] = (byte) (obj.str /6);

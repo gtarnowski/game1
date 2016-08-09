@@ -1,10 +1,4 @@
-package com.company.Engine;
-
-import java.util.Objects;
-import java.util.Scanner;
-
-import static java.lang.System.in;
-import static java.lang.System.out;
+package com.company.Engine.Player;
 
 
 public class Player {
