@@ -1,8 +1,11 @@
 package com.company.Engine.Player;
 
 
+import com.company.Engine.StatsModifiers.StatsModifier;
 import com.company.Gfx.Gfx;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -10,28 +13,23 @@ import static java.lang.System.in;
 import static java.lang.System.out;
 
 public class BuildPlayer extends Player {
-    Player player = new Player();
-    StatsModifier statsModifier = new StatsModifier();
-    Gfx gfx = new Gfx();
+    private Player player = new Player();
+    private StatsModifier statsModifier = new StatsModifier();
+    private Gfx gfx = new Gfx();
 
     public void createCharacter(){
         buildIdentity();
         buildCharacter();
-        statsModifier.calculateStatByStrength(player);
-        statsModifier.calculateStatByAgility(player);
-        statsModifier.calculateStatByVitality(player);
-        statsModifier.calculateStatByEnergy(player);
-        out.println("MIN Magic: " + player.attackMagic[0]);
-        out.println("MAX Magic: " + player.attackMagic[1]);
-        out.println("MIN Melee: " + player.attack[0]);
-        out.println("MAX Melee: " + player.attack[1]);
-        out.println("DEF: " + player.def);
-        out.println("MP: " + player.mp);
-        out.println("HP: " + player.hp);
-
-
+        statsModifier.calculateStatByStrength(player.selectedClass, player.str, player.agi, player.attack);
+        statsModifier.calculateStatByAgility(player.selectedClass, player.def, player.str, player.agi, player.attack);
+        statsModifier.calculateStatByVitality(player.selectedClass, player.lvl, player.hp, player.vit);
+        statsModifier.calculateStatByEnergy(player.selectedClass, player.lvl, player.mp, player.ene, player.attackMagic);
+        try {
+            saveCharacterData();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
 
     private void buildIdentity(){
         Scanner sc = new Scanner(in);
@@ -65,5 +63,32 @@ public class BuildPlayer extends Player {
             //Arch stats
             this.player.str = 22; this.player.agi = 25; this.player.vit = 20;this.player.ene = 15;
         }
+    }
+    private void saveCharacterData() throws IOException {
+        PrintWriter writer = new PrintWriter("player.txt");
+
+        writer.println(player.selectedClass);
+        writer.println(player.name);
+
+        writer.println(player.lvl);
+        writer.println(player.hp);
+        writer.println(player.mp);
+
+        writer.println(player.str);
+        writer.println(player.agi);
+        writer.println(player.vit);
+        writer.println(player.ene);
+
+        writer.println(player.def);
+
+        if(Objects.equals(player.selectedClass,profession[0])){
+            writer.print(player.attackMagic[0]);
+            writer.print(player.attackMagic[1]);
+        }else {
+            writer.println(player.attack[0]);
+            writer.println(player.attack[1]);
+        }
+
+        writer.close();
     }
 }
