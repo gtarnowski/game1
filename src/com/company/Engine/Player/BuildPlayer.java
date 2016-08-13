@@ -1,6 +1,7 @@
 package com.company.Engine.Player;
 
 
+import com.company.Engine.Profession;
 import com.company.Engine.StatsModifiers.StatsModifier;
 import com.company.Gfx.Gfx;
 
@@ -13,17 +14,20 @@ import static java.lang.System.in;
 import static java.lang.System.out;
 
 public class BuildPlayer extends Player {
-    private Player player = new Player();
-    private StatsModifier statsModifier = new StatsModifier();
+
+
+    private Player pl = new Player();
+    private StatsModifier statMod = new StatsModifier();
     private Gfx gfx = new Gfx();
+    private Profession mage = Profession.MAGE;
+    private Profession warr = Profession.WARRIOR;
+    private Profession arch = Profession.ARCHER;
+
 
     public void createCharacter(){
         buildIdentity();
         buildCharacter();
-        statsModifier.calculateStatByStrength(player.selectedClass, player.str, player.agi, player.attack);
-        statsModifier.calculateStatByAgility(player.selectedClass, player.def, player.str, player.agi, player.attack);
-        statsModifier.calculateStatByVitality(player.selectedClass, player.lvl, player.hp, player.vit);
-        statsModifier.calculateStatByEnergy(player.selectedClass, player.lvl, player.mp, player.ene, player.attackMagic);
+        buildCharacterStats();
         try {
             saveCharacterData();
         } catch (IOException e) {
@@ -31,62 +35,85 @@ public class BuildPlayer extends Player {
         }
     }
 
+    private void buildCharacterStats() {
+        if(Objects.equals(pl.prof, String.valueOf(mage))){
+            //Mage stats
+            statMod.calcHealth(pl.prof,pl.lvl,pl.vit);
+            statMod.calcDefense(pl.prof,pl.agi);
+            statMod.calcManaAndMagic(pl.lvl,pl.ene);
+        }
+        if(Objects.equals(pl.prof, String.valueOf(warr))){
+            //Warr stats
+            statMod.calcMeleeAttack(pl.str,pl.agi);
+            statMod.calcDefense(pl.prof,pl.agi);
+            statMod.calcHealth(pl.prof,pl.lvl,pl.vit);
+            statMod.calcMana(pl.prof,pl.lvl,pl.ene);
+        }
+        if(Objects.equals(pl.prof, String.valueOf(arch))){
+            //Arch stats
+            statMod.calcDefenseAndRange(pl.str,pl.agi);
+            statMod.calcHealth(pl.prof,pl.lvl,pl.vit);
+            statMod.calcMana(pl.prof,pl.lvl,pl.ene);
+        }
+    }
+
     private void buildIdentity(){
         Scanner sc = new Scanner(in);
         int res;
-        player.lvl = 1;
+        pl.lvl = 1;
 
         out.println("Enter player name: ");
-        player.name = sc.next();
+        pl.name = sc.next();
 
         gfx.drawClassChoose();
         res = sc.nextInt();
 
         if(res == 1){
-            this.player.selectedClass =  profession[0];
+            pl.prof = String.valueOf(mage);
         }else if(res == 2){
-            this.player.selectedClass =  profession[1];
+            pl.prof = String.valueOf(warr);
         }else {
-            this.player.selectedClass =  profession[2];
+            pl.prof = String.valueOf(arch);
         }
     }
     private void buildCharacter(){
-        if(Objects.equals(this.player.selectedClass, profession[0])){
+        //TODO: ZROBIĆ TO NA KONSTRUKTORZE!!!!!!!!!!!!!!!!
+        if(Objects.equals(pl.prof, String.valueOf(mage))){
             //Mage stats
-            this.player.str = 18; this.player.agi = 18; this.player.vit = 15;this.player.ene = 30;
+            pl.str = 18; pl.agi = 18; pl.vit = 15;pl.ene = 30;
         }
-        if(Objects.equals(this.player.selectedClass, profession[1])){
+        if(Objects.equals(pl.prof, String.valueOf(warr))){
             //Warr stats
-            this.player.str = 28; this.player.agi = 20; this.player.vit = 25;this.player.ene = 10;
+            pl.str = 28; pl.agi = 20; pl.vit = 25;pl.ene = 10;
         }
-        if(Objects.equals(this.player.selectedClass, profession[2])){
+        if(Objects.equals(pl.prof, String.valueOf(arch))){
             //Arch stats
-            this.player.str = 22; this.player.agi = 25; this.player.vit = 20;this.player.ene = 15;
+            pl.str = 22; pl.agi = 25; pl.vit = 20;pl.ene = 15;
         }
     }
     private void saveCharacterData() throws IOException {
         PrintWriter writer = new PrintWriter("player.txt");
 
-        writer.println(player.selectedClass);
-        writer.println(player.name);
+        writer.println(pl.prof);
+        writer.println(pl.name);
 
-        writer.println(player.lvl);
-        writer.println(player.hp);
-        writer.println(player.mp);
+        writer.println(pl.lvl);
+        writer.println(pl.hp);
+        writer.println(pl.mp);
 
-        writer.println(player.str);
-        writer.println(player.agi);
-        writer.println(player.vit);
-        writer.println(player.ene);
+        writer.println(pl.str);
+        writer.println(pl.agi);
+        writer.println(pl.vit);
+        writer.println(pl.ene);
 
-        writer.println(player.def);
+        writer.println(pl.def);
 
-        if(Objects.equals(player.selectedClass,profession[0])){
-            writer.print(player.attackMagic[0]);
-            writer.print(player.attackMagic[1]);
+        if(Objects.equals(pl.prof,String.valueOf(mage))){
+            writer.print(pl.attackMagic[0]);
+            writer.print(pl.attackMagic[1]);
         }else {
-            writer.println(player.attack[0]);
-            writer.println(player.attack[1]);
+            writer.println(pl.attack[0]);
+            writer.println(pl.attack[1]);
         }
 
         writer.close();

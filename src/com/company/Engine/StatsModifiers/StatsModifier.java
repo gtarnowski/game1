@@ -1,71 +1,115 @@
 package com.company.Engine.StatsModifiers;
 
-import com.company.Engine.Player.Player;
+import com.company.Engine.Profession;
 
 import java.util.Objects;
 
 
-public class  StatsModifier extends Player{
+public class  StatsModifier {
+    private Profession mage = Profession.MAGE;
+    private Profession warr = Profession.WARRIOR;
+    private Profession arch = Profession.ARCHER;
 
-    public void calculateStatByStrength(String selectedClass, byte str, byte agi, byte[] attack){
-        //DK attack set - staty poprawne
-        if(Objects.equals(selectedClass, profession[1])){
-            attack[0] = (byte) (str /6);
-            attack[1] = (byte) (str / 4);
-        }
-        //ARCH attack set -
-        if(Objects.equals(selectedClass, profession[2])){
-            attack[0] = (byte) ((str /14) + (agi / 7));
-            attack[1] = (byte) ((str /8) + (agi / 4));
-        }
+    public byte[] calcMeleeAttack( byte str, byte agi){
+
+        byte attackMin = 0;
+        byte attackMax = 0;
+
+        //DK attack set
+            attackMin = (byte) (str /6);
+            attackMax = (byte) (str / 4);
+
+        return new byte[]{attackMin,attackMax};
     }
-    public void calculateStatByAgility(String selectedClass, byte def, byte str, byte agi, byte[] attack){
-        //SM attack set -
-        if(Objects.equals(selectedClass, profession[0])){
-            def = (byte) (agi /4);
+
+
+    public byte calcDefense(String selectedClass, byte agi) {
+
+        byte def = 0;
+
+        //SM defense set
+        if (Objects.equals(selectedClass, String.valueOf(mage))) {
+            def = (byte) (agi / 4);
         }
-        //DK attack set -
-        if(Objects.equals(selectedClass, profession[1])){
-            def = (byte) (agi /3);
+
+
+        //DK defense set
+        if (Objects.equals(selectedClass, String.valueOf(warr))) {
+            def = (byte) (agi / 3);
         }
-        //ARCH attack set -
-        if(Objects.equals(selectedClass, profession[2])){
-            def = (byte) (agi /10);
-            attack[0] = (byte) ((str /14) + (agi / 7));
-            attack[1] = (byte) ((str /8) + (agi / 4));
-        }
+
+        return def;
     }
-    public void calculateStatByVitality(String selectedClass, byte lvl, byte hp, byte vit){
-        //SM vit
+
+    public byte[] calcDefenseAndRange(byte str, byte agi){
+        //ARCH Defense and Attack calc
+        byte def =0;
+        byte attackMin;
+        byte attackMax;
+
+        def = (byte) (agi /10);
+        attackMin = (byte) ((str /14) + (agi / 7));
+        attackMax = (byte) ((str /8) + (agi / 4));
+
+
+        return new byte[]{def,attackMin,attackMax};
+    }
+
+
+    public byte calcHealth(String selectedClass, byte lvl, byte vit){
+        byte hp =0;
+
+        //SM vit set
         //HP = 30+(lvl-1)+vit*2
-        if(Objects.equals(selectedClass, profession[0])){
+        if(Objects.equals(selectedClass, String.valueOf(mage))){
             hp= (byte) (30 + (lvl - 1 ) + (vit * 2));
         }
-        //DK vit
+
+
+        //DK vit set
         //HP = 35+(lvl-1)*2+vit*3
-        if(Objects.equals(selectedClass, profession[1])){
+        if(Objects.equals(selectedClass, String.valueOf(warr))){
             hp= (byte) (35 + (lvl - 1)*2 + (vit * 3));
         }
-        //ARCH vit
+
+
+        //ARCH vit set
         //HP = 40+(lvl-1)+vit*2
-        if(Objects.equals(selectedClass, profession[2])){
+        if(Objects.equals(selectedClass, String.valueOf(arch))){
            hp= (byte) (40+ (lvl - 1) + vit * 2);
         }
+        return hp;
     }
-    public void calculateStatByEnergy(String selectedClass, byte lvl, byte mp, byte ene, byte[] attackMagic){
-        //SM ene + mp calc
-        if(Objects.equals(selectedClass, profession[0])){
-            attackMagic[0]= (byte) (ene/9);
-            attackMagic[1]= (byte) (ene/4);
-            mp = (byte) ((lvl - 1) * 2 + (ene * 2));
-        }
-        //DK ene calc
-        if(Objects.equals(selectedClass, profession[1])){
-            mp = (byte) (10 + (lvl -1) * 0.5 + ene);
-        }
-        //ARCH ene calc
-        if(Objects.equals(selectedClass, profession[2])){
-            mp = (byte) (6 + (lvl * 1.5) + (ene * 1.5));
-        }
+
+
+    public byte calcMana(String selectedClass, byte lvl, byte ene){
+
+            byte mp =0;
+
+            //DK ene set
+            if(Objects.equals(selectedClass, String.valueOf(warr))){
+                mp = (byte) (10 + (lvl -1) * 0.5 + ene);
+            }
+
+            //ARCH ene set
+            if(Objects.equals(selectedClass, String.valueOf(arch))){
+                mp = (byte) (6 + (lvl * 1.5) + (ene * 1.5));
+            }
+
+            return mp;
+    }
+
+    public byte [] calcManaAndMagic(byte lvl,byte ene){
+        //MAGE Mana and MagicAttack calc
+        byte mp =0;
+        byte attackMin;
+        byte attackMax;
+
+
+        attackMin= (byte) (ene/9);
+        attackMax= (byte) (ene/4);
+        mp = (byte) ((lvl - 1) * 2 + (ene * 2));
+
+        return new byte[] {mp,attackMin,attackMax};
     }
 }

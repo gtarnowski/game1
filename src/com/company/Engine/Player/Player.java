@@ -18,7 +18,9 @@ public class Player {
     protected byte def;
 
     protected String name;
-    protected String selectedClass;
-    protected String [] profession = {"mage","warrior","archer"};
+
+    //Player selected prof
+    protected String prof;
+
 
 }
