@@ -1,20 +1,46 @@
 package com.company;
 
-import com.company.Engine.Base.Begin;
-import com.company.Engine.Base.Start;
-import com.company.Engine.GameSystem.Fight;
+import com.company.Engine.GameSystem.GameSys;
+import com.company.Engine.Player.BuildPlayer;
+import com.company.Gfx.Gfx;
 
-import java.util.Random;
+import java.io.IOException;
+import java.util.Scanner;
 
+import static java.lang.System.in;
 import static java.lang.System.out;
 
 public class Main {
-    public static void main(String[] args) {
-        Start start = new Start();
-        start.newGame();
 
-        Begin begin = new Begin();
-        begin.readStats();
+    static BuildPlayer build = new BuildPlayer();
+    static Gfx gfx = new Gfx();
+    static GameSys gameSys = new GameSys();
+
+
+    public static void main(String[] args) throws IOException, InterruptedException {
+        newGame();
+        gameSys.buildHero();
+    }
+
+
+    public static void newGame() throws IOException, InterruptedException {
+        Scanner sc = new Scanner(in);
+        char result;
+
+        gfx.drawMenuItems();
+        result = sc.next().charAt(0);
+
+        if (result == '1') {
+            build.createCharacter();
+        } else if(result == '2'){
+            gameSys.buildHero();
+        }else if (result == '3') {
+            out.println("Game ending");
+            System.exit(0);
+        } else {
+            out.println("Wrong choose, try again");
+            newGame();
+        }
     }
 
 }

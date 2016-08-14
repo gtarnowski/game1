@@ -1,13 +1,17 @@
 package com.company.Engine.Player;
 
 
+import com.company.Engine.Base.Begin;
+import com.company.Engine.Base.Helper;
 import com.company.Engine.Profession;
-import com.company.Engine.StatsModifiers.StatsModifier;
 import com.company.Gfx.Gfx;
 
+import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Objects;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import static java.lang.System.in;
@@ -16,16 +20,18 @@ import static java.lang.System.out;
 public class BuildPlayer extends Player {
 
 
-    private Player pl = new Player();
-    private StatsModifier statMod = new StatsModifier();
+    private Player player = new Player();
     private Gfx gfx = new Gfx();
+    private Begin begin = new Begin();
+    private Helper helper = new Helper();
     private Profession mage = Profession.MAGE;
     private Profession warr = Profession.WARRIOR;
     private Profession arch = Profession.ARCHER;
 
 
-    public void createCharacter(){
+    public void createCharacter() throws IOException, InterruptedException {
         buildIdentity();
+        buildClass();
         buildCharacter();
         buildCharacterStats();
         try {
@@ -33,89 +39,113 @@ public class BuildPlayer extends Player {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        gfx.drawCharacterSelection();
+
     }
 
     private void buildCharacterStats() {
-        if(Objects.equals(pl.prof, String.valueOf(mage))){
+        if (player.getProf().equals(String.valueOf(mage))) {
             //Mage stats
-            statMod.calcHealth(pl.prof,pl.lvl,pl.vit);
-            statMod.calcDefense(pl.prof,pl.agi);
-            statMod.calcManaAndMagic(pl.lvl,pl.ene);
+            player.calcHealth();
+            player.calcDefense();
+            player.calcManaAndMagic();
         }
-        if(Objects.equals(pl.prof, String.valueOf(warr))){
+        if (player.getProf().equals(String.valueOf(warr))) {
             //Warr stats
-            statMod.calcMeleeAttack(pl.str,pl.agi);
-            statMod.calcDefense(pl.prof,pl.agi);
-            statMod.calcHealth(pl.prof,pl.lvl,pl.vit);
-            statMod.calcMana(pl.prof,pl.lvl,pl.ene);
+            player.calcMeleeAttack();
+            player.calcDefense();
+            player.calcHealth();
+            player.calcMana();
         }
-        if(Objects.equals(pl.prof, String.valueOf(arch))){
+        if (player.getProf().equals(String.valueOf(arch))) {
             //Arch stats
-            statMod.calcDefenseAndRange(pl.str,pl.agi);
-            statMod.calcHealth(pl.prof,pl.lvl,pl.vit);
-            statMod.calcMana(pl.prof,pl.lvl,pl.ene);
+            player.calcDefenseAndRange();
+            player.calcHealth();
+            player.calcMana();
         }
     }
 
-    private void buildIdentity(){
+    private void buildIdentity() {
         Scanner sc = new Scanner(in);
-        int res;
-        pl.lvl = 1;
+
+        player.setLvl((byte) 1);
 
         out.println("Enter player name: ");
-        pl.name = sc.next();
+        player.setName(sc.next());
 
+
+    }
+
+    private void buildClass() {
+        int result;
+        Scanner sc = new Scanner(in);
         gfx.drawClassChoose();
-        res = sc.nextInt();
+        result = sc.nextInt();
 
-        if(res == 1){
-            pl.prof = String.valueOf(mage);
-        }else if(res == 2){
-            pl.prof = String.valueOf(warr);
-        }else {
-            pl.prof = String.valueOf(arch);
+        try {
+            if (result == 1) {
+                player.setProf(String.valueOf(mage));
+            } else if (result == 2) {
+                player.setProf(String.valueOf(warr));
+            } else if (result == 3) {
+                player.setProf(String.valueOf(arch));
+            } else {
+                out.println("Select correct number of class!");
+                buildClass();
+            }
+        } catch (InputMismatchException ex ) {
+            out.println("Select class using digits!");
+            buildClass();
         }
+
     }
-    private void buildCharacter(){
-        //TODO: ZROBIĆ TO NA KONSTRUKTORZE!!!!!!!!!!!!!!!!
-        if(Objects.equals(pl.prof, String.valueOf(mage))){
+
+    private void buildCharacter() {
+        if (player.getProf().equals(String.valueOf(mage))) {
             //Mage stats
-            pl.str = 18; pl.agi = 18; pl.vit = 15;pl.ene = 30;
+            player.setStr((byte) 18);
+            player.setAgi((byte) 18);
+            player.setVit((byte) 15);
+            player.setEne((byte) 30);
         }
-        if(Objects.equals(pl.prof, String.valueOf(warr))){
+        if (player.getProf().equals(String.valueOf(warr))) {
             //Warr stats
-            pl.str = 28; pl.agi = 20; pl.vit = 25;pl.ene = 10;
+            player.setStr((byte) 28);
+            player.setAgi((byte) 20);
+            player.setVit((byte) 25);
+            player.setEne((byte) 10);
         }
-        if(Objects.equals(pl.prof, String.valueOf(arch))){
+        if (player.getProf().equals(String.valueOf(arch))) {
             //Arch stats
-            pl.str = 22; pl.agi = 25; pl.vit = 20;pl.ene = 15;
+            player.setStr((byte) 22);
+            player.setAgi((byte) 25);
+            player.setVit((byte) 20);
+            player.setEne((byte) 15);
         }
     }
+
     private void saveCharacterData() throws IOException {
         PrintWriter writer = new PrintWriter("player.txt");
 
-        writer.println(pl.prof);
-        writer.println(pl.name);
+        writer.println(helper.stringToHex(player.getProf()));
+        writer.println(helper.stringToHex(player.getName()));
 
-        writer.println(pl.lvl);
-        writer.println(pl.hp);
-        writer.println(pl.mp);
+        writer.println(helper.byteToHex(player.getLvl()));
+        writer.println(helper.byteToHex(player.getHp()));
+        writer.println(helper.byteToHex(player.getMp()));
 
-        writer.println(pl.str);
-        writer.println(pl.agi);
-        writer.println(pl.vit);
-        writer.println(pl.ene);
+        writer.println(helper.byteToHex(player.getStr()));
+        writer.println(helper.byteToHex(player.getAgi()));
+        writer.println(helper.byteToHex(player.getVit()));
+        writer.println(helper.byteToHex(player.getEne()));
 
-        writer.println(pl.def);
+        writer.println(helper.byteToHex(player.getDef()));
 
-        if(Objects.equals(pl.prof,String.valueOf(mage))){
-            writer.print(pl.attackMagic[0]);
-            writer.print(pl.attackMagic[1]);
-        }else {
-            writer.println(pl.attack[0]);
-            writer.println(pl.attack[1]);
-        }
+        writer.println(helper.byteToHex(player.getAttackMin()));
+        writer.println(helper.byteToHex(player.getAttackMax()));
 
         writer.close();
     }
+
+
 }
