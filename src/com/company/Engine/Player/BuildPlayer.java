@@ -68,7 +68,7 @@ public class BuildPlayer extends Player {
     private void buildIdentity() {
         Scanner sc = new Scanner(in);
 
-        player.setLvl((byte) 1);
+        player.setLvl((short) 1);
 
         out.println("Enter player name: ");
         player.setName(sc.next());
@@ -103,24 +103,24 @@ public class BuildPlayer extends Player {
     private void buildCharacter() {
         if (player.getProf().equals(String.valueOf(mage))) {
             //Mage stats
-            player.setStr((byte) 18);
-            player.setAgi((byte) 18);
-            player.setVit((byte) 15);
-            player.setEne((byte) 30);
+            player.setStr((short) 18);
+            player.setAgi((short) 18);
+            player.setVit((short) 15);
+            player.setEne((short) 30);
         }
         if (player.getProf().equals(String.valueOf(warr))) {
             //Warr stats
-            player.setStr((byte) 28);
-            player.setAgi((byte) 20);
-            player.setVit((byte) 25);
-            player.setEne((byte) 10);
+            player.setStr((short) 28);
+            player.setAgi((short) 20);
+            player.setVit((short) 25);
+            player.setEne((short) 10);
         }
         if (player.getProf().equals(String.valueOf(arch))) {
             //Arch stats
-            player.setStr((byte) 22);
-            player.setAgi((byte) 25);
-            player.setVit((byte) 20);
-            player.setEne((byte) 15);
+            player.setStr((short) 22);
+            player.setAgi((short) 25);
+            player.setVit((short) 20);
+            player.setEne((short) 15);
         }
     }
 
@@ -130,19 +130,19 @@ public class BuildPlayer extends Player {
         writer.println(helper.stringToHex(player.getProf()));
         writer.println(helper.stringToHex(player.getName()));
 
-        writer.println(helper.byteToHex(player.getLvl()));
-        writer.println(helper.byteToHex(player.getHp()));
-        writer.println(helper.byteToHex(player.getMp()));
+        writer.println(helper.byteToHex((byte) player.getLvl()));
+        writer.println(helper.byteToHex((byte) player.getHp()));
+        writer.println(helper.byteToHex((byte) player.getMp()));
 
-        writer.println(helper.byteToHex(player.getStr()));
-        writer.println(helper.byteToHex(player.getAgi()));
-        writer.println(helper.byteToHex(player.getVit()));
-        writer.println(helper.byteToHex(player.getEne()));
+        writer.println(helper.byteToHex((byte) player.getStr()));
+        writer.println(helper.byteToHex((byte) player.getAgi()));
+        writer.println(helper.byteToHex((byte) player.getVit()));
+        writer.println(helper.byteToHex((byte) player.getEne()));
 
-        writer.println(helper.byteToHex(player.getDef()));
+        writer.println(helper.byteToHex((byte) player.getDef()));
 
-        writer.println(helper.byteToHex(player.getAttackMin()));
-        writer.println(helper.byteToHex(player.getAttackMax()));
+        writer.println(helper.byteToHex((byte) player.getAttackMin()));
+        writer.println(helper.byteToHex((byte) player.getAttackMax()));
 
         writer.close();
     }

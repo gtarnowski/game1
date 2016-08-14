@@ -11,6 +11,8 @@ import static java.lang.System.out;
 
 public class Helper {
 
+    //Load Player statistics from file,
+    //value="fileName" means real path to the FILE and is reference from Method call
     public List<String> readStats(String fileName){
         List<String> list = new ArrayList<String>();
         File file = new File(fileName);
@@ -34,10 +36,11 @@ public class Helper {
 
             }
         }
-        out.println(list);
         return list;
     }
 
+    //CONVERTERS:
+    //Strings and Bytes to HEX code
     public String stringToHex(String hex) throws UnsupportedEncodingException {
         byte [] bytes = hex.getBytes("UTF-8");
         return DatatypeConverter.printHexBinary(bytes);
@@ -48,6 +51,8 @@ public class Helper {
         byte [] bytes = hex.getBytes("UTF-8");
         return DatatypeConverter.printHexBinary(bytes);
     }
+
+    //HEX codes to Strings and Bytes
     public StringBuilder hexToString(String hex){
         StringBuilder output = new StringBuilder();
         for (int i = 0; i < hex.length(); i+=2) {

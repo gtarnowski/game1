@@ -2,46 +2,54 @@ package com.company.Engine.Enemy;
 
 
 public class Enemy {
-    private byte lvl;
-    private byte hp;
+    private short lvl;
+    private short hp;
 
-    private byte def;
+    private short def;
 
-    private byte attackMin;
-    private byte attackMax;
+    private short attackMin;
+    private short attackMax;
 
-    public Enemy(byte level){
+    public Enemy(short level) {
         lvl = level;
         calculateAttack();
         calculateHp();
         calculateDef();
     }
 
-    public void calculateAttack(){
-        this.attackMin = (byte) (this.lvl * 3);
-        this.attackMax = (byte) (this.lvl * 4);
-    }
-    public void calculateHp(){
-        this.hp = (byte) (this.lvl * 25);
-    }
-    public void calculateDef(){
-        this.def = (byte) (this.lvl * 1.05);
+    public void calculateAttack() {
+        this.attackMin = (short) (this.lvl * 3);
+        this.attackMax = (short) (this.lvl * 4);
     }
 
+    public void calculateHp() {
+        this.hp = (short) (this.lvl * 20);
+    }
 
-    public byte getLvl() {
-        return lvl;
+    public void calculateDef() {
+        this.def = (short) (this.lvl * 1.05);
+    }
+
+    public short getHp(){
+        return this.hp;
+    }
+
+    public short getDef(){
+        return this.def;
+    }
+
+    public short getLvl() {
+        return this.lvl;
     }
 
 
-    public byte getAttackMin() {
-        return attackMin;
+    public short getAttackMin() {
+        return this.attackMin;
     }
 
 
-
-    public byte getAttackMax() {
-        return attackMax;
+    public short getAttackMax() {
+        return this.attackMax;
     }
 
 

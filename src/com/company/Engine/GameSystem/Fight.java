@@ -14,38 +14,55 @@ import java.util.Random;
 
 public class Fight {
 
-    byte [] singleHit(Player player, Enemy enemy){
+    short [] singleHit(Player player, Enemy enemy){
+        return new short[] {playerSingleHit(player), enemySingleHit(enemy)};
+    }
+
+    //SINGLE HIT SCHEMA (same for player and enemy):
+
+    //modifier = player max DMG - min DMG;
+    //attackAverage = random form modifier;
+    //finalPlayerHit = min DMG + attackAverage;
+    private short playerSingleHit(Player player){
         Random rand = new Random();
 
-        byte playerAttack = 0;
-        byte playerAttackAverage =0;
-        byte playerAttackMultipier =0;
+        short playerAttack = 0;
+        short playerAttackAverage =0;
+        short playerAttackMultiplier =0;
 
-        playerAttack = (byte) (player.getAttackMax() - player.getAttackMin());
+        playerAttack = (short) (player.getAttackMax() - player.getAttackMin());
 
-        playerAttackAverage = (byte) (rand.nextInt(playerAttack) +2 );
+        playerAttackAverage = (short) (rand.nextInt(playerAttack) +2 );
         out.println("playerAverage:" + playerAttackAverage);
 
-        playerAttackMultipier = (byte) (player.getAttackMin() + playerAttackAverage);
-        out.println("PLAYER HIT:" +  playerAttackMultipier);
+        playerAttackMultiplier = (short) (player.getAttackMin() + playerAttackAverage);
+        out.println("PLAYER HIT:" +  playerAttackMultiplier);
+
+        return playerAttackMultiplier;
+    }
+
+    private short enemySingleHit(Enemy enemy){
+        Random rand = new Random();
+        out.println("value :" + enemy.getAttackMin());
+        out.println("value :" + enemy.getAttackMax());
+        out.println("value :" + enemy.getLvl());
+        out.println("value :" + enemy.getHp());
+        out.println("value :" + enemy.getDef());
 
 
-        out.println("--------------------------");
 
-        byte enemyAttack = 0;
-        byte enemyAttackAverage =0;
-        byte enemyAttackMultiplier =0;
+        short enemyAttack = 0;
+        short enemyAttackAverage =0;
+        short enemyAttackMultiplier =0;
 
-        enemyAttack = (byte) (enemy.getAttackMax() - enemy.getAttackMin());
-        out.println("value enemyAtt:" + enemyAttack);
+        enemyAttack = (short) (enemy.getAttackMax() - enemy.getAttackMin());
 
-        enemyAttackAverage = (byte) (rand.nextInt(enemyAttack) +2 );
+        enemyAttackAverage = (short) (rand.nextInt(enemyAttack) +2 );
         out.println("value enemyAverage:" + enemyAttackAverage);
 
-        enemyAttackMultiplier = (byte) (enemy.getAttackMin() + enemyAttackAverage);
+        enemyAttackMultiplier = (short) (enemy.getAttackMin() + enemyAttackAverage);
         out.println("value ENEMY HIT:" + enemyAttackMultiplier);
 
-
-        return new byte[]{playerAttackMultipier,enemyAttackMultiplier};
+        return enemyAttackMultiplier;
     }
 }

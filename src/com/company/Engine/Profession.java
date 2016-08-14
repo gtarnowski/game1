@@ -6,7 +6,7 @@ public enum Profession {
 
     String className;
 
-    Profession(String mage) {
-        className = mage;
+    Profession(String prof) {
+        className = prof;
     }
 }

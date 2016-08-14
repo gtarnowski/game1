@@ -28,6 +28,7 @@ public class Gfx {
         out.println("What do You want to do?");
         out.println("1. Explore the world");
         out.println("2. Visit city");
+        out.println("3. Fight with random enemy!");
     }
     public void drawCities(){
         String[] cities = {"Capitol","Amazons Temple", "Damned Camp", "Whorehouse"};

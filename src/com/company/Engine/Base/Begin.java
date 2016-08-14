@@ -14,11 +14,13 @@ import static java.lang.System.out;
 public class Begin {
     Helper helper = new Helper();
 
+    //Final player statistics loader
     public Player loadCharacter(){
         List<String> stats= new ArrayList<String>();
         return loadCharacterStats(stats = helper.readStats("player.txt"));
     }
 
+    //Method setting default Player object statistics
     private Player loadCharacterStats(List<String> stats){
         Player player = new Player();
         player.setProf(new String ( helper.hexToString(stats.get(0))));
@@ -38,20 +40,6 @@ public class Begin {
         player.setAttackMin(helper.hexToByte(stats.get(10)));
         player.setAttackMax(helper.hexToByte(stats.get(11)));
 
-//        out.println("value : "
-//                    + player.getProf() +
-//                " " + player.getName() +
-//                " " + player.getLvl()+
-//                " " + player.getHp()+
-//                " " + player.getMp()+
-//                " " + player.getStr()+
-//                " " + player.getAgi()+
-//                " " + player.getVit()+
-//                " " + player.getEne()+
-//                " " + player.getDef()+
-//                " " + player.getAttackMin()+
-//                " " + player.getAttackMax()
-//        );
         return player;
     }
 
