@@ -51,12 +51,10 @@ public class GameSys extends Fight{
     private void callFight(){
         //Enemy with Constructor. player.getLvl setting generated mob Attributes;
         //Chances should be "equals";
-        Scanner scanner = new Scanner(in);
 
-        Enemy enemy = new Enemy(scanner.nextShort());
+        Enemy enemy = new Enemy(player.getLvl());
         Fight fight = new Fight();
 
         fight.singleHit(player,enemy);
-
     }
 }
