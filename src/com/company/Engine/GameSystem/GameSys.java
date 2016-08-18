@@ -2,6 +2,7 @@ package com.company.Engine.GameSystem;
 
 import com.company.Engine.Base.Begin;
 import com.company.Engine.Enemy.Enemy;
+import com.company.Engine.GameSystem.Skills.MageSkills;
 import com.company.Engine.Player.Player;
 import com.company.Gfx.Gfx;
 
@@ -54,7 +55,11 @@ public class GameSys extends Fight{
 
         Enemy enemy = new Enemy(player.getLvl());
         Fight fight = new Fight();
+        fight.skill(player);
+        MageSkills skills = new MageSkills();
+        skills.skillsLearnMenu(player);
+        skills.availableSkills(player);
 
-        fight.singleHit(player,enemy);
+//        fight.singleHit(player,enemy);
     }
 }

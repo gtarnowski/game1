@@ -1,21 +1,21 @@
 package com.company.Engine.GameSystem;
 
 import com.company.Engine.Enemy.Enemy;
+import com.company.Engine.GameSystem.Skills.MageSkillSystem;
+import com.company.Engine.GameSystem.Skills.MageSkills;
 import com.company.Engine.Player.Player;
-import com.company.Main;
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 import static java.lang.System.out;
-import  java.lang.Math;
+
 import java.util.Random;
 
 public class Fight {
 
     short [] singleHit(Player player, Enemy enemy){
         return new short[] {playerSingleHit(player), enemySingleHit(enemy)};
+    }
+    public void skill(Player player){
+//        playerSkillUse(player);
     }
 
     //SINGLE HIT SCHEMA (same for player and enemy):
@@ -65,4 +65,8 @@ public class Fight {
 
         return enemyAttackMultiplier;
     }
+//    private void playerSkillUse(Player player){
+//        MageSkills skills = new MageSkills();
+//        skills.getSkill(player);
+//    }
 }

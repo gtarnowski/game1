@@ -3,6 +3,10 @@ package com.company.Engine.Player;
 
 import com.company.Engine.Profession;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import static java.lang.System.out;
 
 public class Player {
@@ -24,11 +28,30 @@ public class Player {
     //Player selected prof
     private String prof;
 
+    public short getLvlPoints() {
+        return lvlPoints;
+    }
+
+    public void setLvlPoints(short lvlPoints) {
+        this.lvlPoints = lvlPoints;
+    }
+
+    public short getSkillPoints() {
+        return skillPoints;
+    }
+
+    public void setSkillPoints(short skillPoints) {
+        this.skillPoints = skillPoints;
+    }
+
+    private short lvlPoints;
+    private short skillPoints;
+
     private Profession mage = Profession.MAGE;
     private Profession warr = Profession.WARRIOR;
     private Profession arch = Profession.ARCHER;
 
-
+    private Map<String,Boolean> skills = new HashMap<>();
 
     void calcMeleeAttack() {
 
@@ -227,4 +250,21 @@ public class Player {
     public void setProf(String prof) {
         this.prof = prof;
     }
+
+    public Boolean getSkills(String keyName) {
+        return this.skills.get(keyName);
+    }
+
+    public void setSkills(String name, boolean key) {
+        this.skills.put(name,key);
+    }
+    public ArrayList<String> showSkillsMap(){
+        ArrayList<String> skillsList = new ArrayList<>();
+        for (Map.Entry<String,Boolean> entry : skills.entrySet()){
+            String value = entry.getKey();
+            skillsList.add(value);
+        }
+        return skillsList;
+    }
+
 }

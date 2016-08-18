@@ -27,13 +27,14 @@ public class BuildPlayer extends Player {
     private Profession mage = Profession.MAGE;
     private Profession warr = Profession.WARRIOR;
     private Profession arch = Profession.ARCHER;
-
+    private PlayerEvents events = new PlayerEvents();
 
     public void createCharacter() throws IOException, InterruptedException {
         buildIdentity();
         buildClass();
         buildCharacter();
         buildCharacterStats();
+        buildSkills(events);
         try {
             saveCharacterData();
         } catch (IOException e) {
@@ -98,6 +99,10 @@ public class BuildPlayer extends Player {
             buildClass();
         }
 
+    }
+
+    private void buildSkills(PlayerEvents events){
+//        events.skillsSystem(player);
     }
 
     private void buildCharacter() {

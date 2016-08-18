@@ -1,5 +1,8 @@
 package com.company.Gfx;
 
+import com.company.Engine.GameSystem.Skills.MageSkillSystem;
+import com.company.Engine.Player.Player;
+
 import static java.lang.System.out;
 
 
@@ -29,6 +32,18 @@ public class Gfx {
         out.println("1. Explore the world");
         out.println("2. Visit city");
         out.println("3. Fight with random enemy!");
+    }
+
+    public void skillsLearnMenu(Player player, boolean condition){
+        MageSkillSystem scream = MageSkillSystem.SCREAMBALL;
+        MageSkillSystem hate = MageSkillSystem.HATEWAVE;
+        out.println("Available skills:");
+        if((player.getLvl() >= 1) && (!condition)){
+            out.println(scream.name());
+        }
+        if((player.getLvl() >= 3) && (!condition)){
+            out.println(hate.name());
+        }
     }
     public void drawCities(){
         String[] cities = {"Capitol","Amazons Temple", "Damned Camp", "Whorehouse"};
