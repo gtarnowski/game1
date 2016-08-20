@@ -3,6 +3,8 @@ package com.company.Engine.Player;
 
 import com.company.Engine.Base.Begin;
 import com.company.Engine.Base.Helper;
+import com.company.Engine.GameSystem.Skills.MageSkillSystem;
+import com.company.Engine.GameSystem.Skills.MageSkills;
 import com.company.Engine.Profession;
 import com.company.Gfx.Gfx;
 
@@ -34,14 +36,13 @@ public class BuildPlayer extends Player {
         buildClass();
         buildCharacter();
         buildCharacterStats();
-        buildSkills(events);
+        buildSkills();
         try {
             saveCharacterData();
         } catch (IOException e) {
             e.printStackTrace();
         }
         gfx.drawCharacterSelection();
-
     }
 
     private void buildCharacterStats() {
@@ -101,8 +102,9 @@ public class BuildPlayer extends Player {
 
     }
 
-    private void buildSkills(PlayerEvents events){
-//        events.skillsSystem(player);
+    private void buildSkills(){
+        MageSkills skills = new MageSkills();
+        skills.setOnCreatedPlayerSkills(player);
     }
 
     private void buildCharacter() {

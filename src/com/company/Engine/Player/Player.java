@@ -1,6 +1,7 @@
 package com.company.Engine.Player;
 
 
+import com.company.Engine.GameSystem.Skills.MageSkillSystem;
 import com.company.Engine.Profession;
 
 import java.util.ArrayList;
@@ -266,5 +267,6 @@ public class Player {
         }
         return skillsList;
     }
+
 
 }
