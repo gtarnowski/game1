@@ -5,18 +5,50 @@ import com.company.Engine.GameSystem.Skills.MageSkillSystem;
 import com.company.Engine.GameSystem.Skills.MageSkills;
 import com.company.Engine.Player.Player;
 
+import static java.lang.System.err;
 import static java.lang.System.out;
+import static java.lang.System.in;
 
+import java.util.InputMismatchException;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Fight {
 
     short [] singleHit(Player player, Enemy enemy){
-        return new short[] {playerSingleHit(player), enemySingleHit(enemy)};
+        short playerHit = playerSingleHit(player);
+        short enemyHit = enemySingleHit(enemy);
+        usePlayerSpecifiedSkills(player);
+        player.setHp((short) (player.getHp() - enemyHit));
+        enemy.setHp((short) (enemy.getHp() - playerHit));
+        return;
     }
-    public void skill(Player player){
-//        playerSkillUse(player);
+
+    private void usePlayerSpecifiedSkills(Player player) {
+        Scanner scanner = new Scanner(in);
+        player.showSkillsMap();
+
+
+
+
+        try{
+            if(scanner.nextInt() == 1){
+                player.getSkills();
+            }else if(scanner.nextInt() == 2){
+
+            }else if(scanner.nextInt() == 3){
+
+            }else {
+                usePlayerSpecifiedSkills(player);
+            }
+
+        }catch (InputMismatchException ex ) {
+            usePlayerSpecifiedSkills(player);
+            out.println("Select class using digits!");
+        }
+
     }
+
 
     //SINGLE HIT SCHEMA (same for player and enemy):
 
@@ -33,7 +65,7 @@ public class Fight {
         playerAttack = (short) (player.getAttackMax() - player.getAttackMin());
 
         playerAttackAverage = (short) (rand.nextInt(playerAttack) +2 );
-        out.println("playerAverage:" + playerAttackAverage);
+//        out.println("playerAverage:" + playerAttackAverage);
 
         playerAttackMultiplier = (short) (player.getAttackMin() + playerAttackAverage);
         out.println("PLAYER HIT:" +  playerAttackMultiplier);

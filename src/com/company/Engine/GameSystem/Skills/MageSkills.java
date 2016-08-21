@@ -2,9 +2,6 @@ package com.company.Engine.GameSystem.Skills;
 
 import com.company.Engine.Player.Player;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Objects;
 import java.util.Scanner;
 
 import static java.lang.System.in;
@@ -14,14 +11,13 @@ public class MageSkills{
     MageSkillSystem scream = MageSkillSystem.SCREAMBALL;
     MageSkillSystem hate = MageSkillSystem.HATEWAVE;
 
-    public void setOnCreatedPlayerSkills(Player player){
+    public void setMageOnCreatedPlayerSkills(Player player){
         for(MageSkillSystem skillSystem : MageSkillSystem.values()){
             if(skillSystem.name().equals(scream.name())){
                 player.setSkills(skillSystem.name(),true);
             }else{
                 player.setSkills(skillSystem.name(),false);
             }
-
         }
     }
     public void skillsLearnMenu(Player player){
@@ -29,24 +25,29 @@ public class MageSkills{
         Scanner sc = new Scanner(in);
         //TODO: skills.get nie moze byc nullem bo sypie EXC
         if((player.getLvl() >= 1) && (player.getSkills(scream.name()).equals(false))){
-            out.println(scream.name() + "Type '1' to learn");
-            if(sc.next().equals("1")){
+            out.println("Skill: " + scream.name() + " is Available! Type '+' to learn");
+            if(sc.next().equals("+")){
                 learnScreamBall(player);
             }
         }
         if((player.getLvl() >= 3) && (player.getSkills(hate.name()).equals(false))){
-            out.println(hate.name() +  "Type '2' to learn");
-            if(sc.next().equals("2")){
+            out.println("Skill: " + hate.name() +  " is Available! Type '+' to learn");
+            if(sc.next().equals("+")){
                 learnHateWave(player);
             }
         }
     }
+    private short[] mageSkillsMenu(Player player){
+        Scanner scanner = new Scanner(in);
+        player.showSkillsMap();
 
-    public ArrayList<String> availableSkills(Player player){
-       out.println( player.showSkillsMap());
-        return player.showSkillsMap();
+        if(scanner.nextInt() == 1) return useScreamBall(player);
+        else if(scanner.nextInt() == 2) return useHateWave(player);
+        else {
+            out.println("Wrong choose try again.");
+            return new short[0];
+        }
     }
-
     private void learnScreamBall(Player player){
         player.setSkillPoints((short)1);//add for test
         if((player.getSkillPoints() >=1)){
@@ -62,6 +63,21 @@ public class MageSkills{
         }else {
             out.println("Not enough skill points!");
         }
+    }
+
+    private short[] useScreamBall(Player player){
+        if((player.getLvl() >= 1) && (player.getSkills(MageSkillSystem.SCREAMBALL.name()).equals(true))){
+            return new short [] {(short) MageSkillSystem.SCREAMBALL.getSkillMinVal(), (short) MageSkillSystem.SCREAMBALL.getSkillMaxVal()};
+        }
+        out.println("Cannot use that skill!");
+        return new short[0];
+    }
+    private short[] useHateWave(Player player){
+        if((player.getLvl() >= 3) && (player.getSkills(MageSkillSystem.HATEWAVE.name()).equals(true))){
+            return new short[] {(short) MageSkillSystem.HATEWAVE.getSkillMinVal(),(short) MageSkillSystem.HATEWAVE.getSkillMaxVal()};
+        }
+        out.println("Cannot use that skill!");
+        return new short[0];
     }
 
 }

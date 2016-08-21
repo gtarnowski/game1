@@ -1,7 +1,6 @@
 package com.company.Engine.Player;
 
 
-import com.company.Engine.GameSystem.Skills.MageSkillSystem;
 import com.company.Engine.Profession;
 
 import java.util.ArrayList;
@@ -261,12 +260,16 @@ public class Player {
     }
     public ArrayList<String> showSkillsMap(){
         ArrayList<String> skillsList = new ArrayList<>();
-        for (Map.Entry<String,Boolean> entry : skills.entrySet()){
-            String value = entry.getKey();
-            skillsList.add(value);
+        int i = 1;
+        for (Map.Entry<String,Boolean> entry : this.skills.entrySet()){
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            out.println(i + ". " + key);
+            if(value.equals(true)){
+                skillsList.add(key);
+            }
+            i++;
         }
         return skillsList;
     }
-
-
 }

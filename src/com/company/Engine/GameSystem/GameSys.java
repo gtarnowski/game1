@@ -4,6 +4,7 @@ import com.company.Engine.Base.Begin;
 import com.company.Engine.Enemy.Enemy;
 import com.company.Engine.GameSystem.Skills.MageSkills;
 import com.company.Engine.Player.Player;
+import com.company.Engine.Player.PlayerEvents;
 import com.company.Gfx.Gfx;
 
 import java.util.InputMismatchException;
@@ -15,12 +16,13 @@ import static java.lang.System.out;
 
 public class GameSys extends Fight{
     private Player player = new Player();
-    private Begin begin = new Begin();
     private Gfx gfx = new Gfx();
-
+    //TODO: skile startowe powinny być załadowane do pliku i z pliku zsetowane pod PLAYERA
+    private MageSkills skills = new MageSkills();
+    private PlayerEvents events = new PlayerEvents();
 
     public void buildHero(){
-        player = begin.loadCharacter();
+        events.onCretedPlayerEvents(player);
         game();
     }
 
@@ -55,11 +57,6 @@ public class GameSys extends Fight{
 
         Enemy enemy = new Enemy(player.getLvl());
         Fight fight = new Fight();
-        fight.skill(player);
-        MageSkills skills = new MageSkills();
-        skills.skillsLearnMenu(player);
-        skills.availableSkills(player);
 
-//        fight.singleHit(player,enemy);
     }
 }

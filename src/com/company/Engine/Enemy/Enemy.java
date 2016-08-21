@@ -23,7 +23,7 @@ public class Enemy {
     }
 
     public void calculateHp() {
-        this.hp = (short) (this.lvl * 20);
+        this.setHp((short) (this.lvl * 20));
     }
 
     public void calculateDef() {
@@ -53,4 +53,7 @@ public class Enemy {
     }
 
 
+    public void setHp(short hp) {
+        this.hp = hp;
+    }
 }

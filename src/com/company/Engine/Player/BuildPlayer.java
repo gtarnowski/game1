@@ -36,7 +36,6 @@ public class BuildPlayer extends Player {
         buildClass();
         buildCharacter();
         buildCharacterStats();
-        buildSkills();
         try {
             saveCharacterData();
         } catch (IOException e) {
@@ -100,11 +99,6 @@ public class BuildPlayer extends Player {
             buildClass();
         }
 
-    }
-
-    private void buildSkills(){
-        MageSkills skills = new MageSkills();
-        skills.setOnCreatedPlayerSkills(player);
     }
 
     private void buildCharacter() {
