@@ -21,7 +21,7 @@ public class Fight {
         usePlayerSpecifiedSkills(player);
         player.setHp((short) (player.getHp() - enemyHit));
         enemy.setHp((short) (enemy.getHp() - playerHit));
-        return;
+        return ;
     }
 
     private void usePlayerSpecifiedSkills(Player player) {

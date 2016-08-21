@@ -2,6 +2,7 @@ package com.company.Engine.GameSystem.Skills;
 
 import com.company.Engine.Player.Player;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import static java.lang.System.in;
@@ -41,12 +42,19 @@ public class MageSkills{
         Scanner scanner = new Scanner(in);
         player.showSkillsMap();
 
-        if(scanner.nextInt() == 1) return useScreamBall(player);
-        else if(scanner.nextInt() == 2) return useHateWave(player);
-        else {
-            out.println("Wrong choose try again.");
-            return new short[0];
+        try {
+            if (scanner.nextInt() == 1) return useScreamBall(player);
+            else if (scanner.nextInt() == 2) return useHateWave(player);
+            else {
+                out.println("Wrong choose! try again.");
+                mageSkillsMenu(player);
+
+            }
+        }catch (InputMismatchException ex){
+            out.println("Select skills using digits!");
+            mageSkillsMenu(player);
         }
+        return new short[0];
     }
     private void learnScreamBall(Player player){
         player.setSkillPoints((short)1);//add for test
