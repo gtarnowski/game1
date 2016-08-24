@@ -38,26 +38,26 @@ public class MageSkills{
             }
         }
     }
-    private short[] mageSkillsMenu(Player player){
+    public short[] mageSkillsMenu(Player player){
         Scanner scanner = new Scanner(in);
+
         player.showSkillsMap();
-
+        int result = scanner.nextInt();
         try {
-            if (scanner.nextInt() == 1) return useScreamBall(player);
-            else if (scanner.nextInt() == 2) return useHateWave(player);
+            if(result == 0){
+                return null;
+            }else if (result == 1) return useScreamBall(player);
+            else if (result == 2) return useHateWave(player);
             else {
-                out.println("Wrong choose! try again.");
                 mageSkillsMenu(player);
-
             }
         }catch (InputMismatchException ex){
             out.println("Select skills using digits!");
             mageSkillsMenu(player);
         }
-        return new short[0];
+        return null;
     }
     private void learnScreamBall(Player player){
-        player.setSkillPoints((short)1);//add for test
         if((player.getSkillPoints() >=1)){
             player.setSkills(scream.name(),true);
         }else {
@@ -65,8 +65,7 @@ public class MageSkills{
         }
     }
     private void learnHateWave(Player player){
-        player.setSkillPoints((short)1);//add for test
-        if((player.getSkillPoints() >=1)){
+        if((player.getSkillPoints() >=3)){
             player.setSkills(hate.name(),true);
         }else {
             out.println("Not enough skill points!");

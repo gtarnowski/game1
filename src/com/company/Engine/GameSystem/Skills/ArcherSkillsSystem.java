@@ -1,13 +1,14 @@
 package com.company.Engine.GameSystem.Skills;
 
-
-public enum MageSkillSystem {
-    SCREAMBALL(2,4),HATEWAVE(7,13);
-
+/**
+ * Created by Grzegorz on 2016-08-23.
+ */
+public enum ArcherSkillsSystem {
+    FLAMESHOT(3,6),DOUBLEBOLT(7,12);
 
     private int skillMin;
     private int skillMax;
-    MageSkillSystem(int min, int max) {
+    ArcherSkillsSystem(int min, int max) {
         skillMin=min;
         skillMax=max;
     }

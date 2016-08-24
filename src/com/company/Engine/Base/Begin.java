@@ -15,14 +15,15 @@ public class Begin {
     Helper helper = new Helper();
 
     //Final player statistics loader
-    public Player loadCharacter(){
+    public void loadCharacter(Player player){
         List<String> stats= new ArrayList<String>();
-        return loadCharacterStats(stats = helper.readStats("player.txt"));
+        player.setGold((short)1000);
+        player.setXp((short) 154);
+        loadCharacterStats(stats = helper.readStats("player.txt"),player);
     }
 
     //Method setting default Player object statistics
-    private Player loadCharacterStats(List<String> stats){
-        Player player = new Player();
+    private void loadCharacterStats(List<String> stats, Player player){
         player.setProf(new String ( helper.hexToString(stats.get(0))));
         player.setName(new String(helper.hexToString(stats.get(1))));
 
@@ -40,7 +41,6 @@ public class Begin {
         player.setAttackMin(helper.hexToByte(stats.get(10)));
         player.setAttackMax(helper.hexToByte(stats.get(11)));
 
-        return player;
     }
 
 }

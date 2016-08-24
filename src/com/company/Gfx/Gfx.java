@@ -33,16 +33,30 @@ public class Gfx {
         out.println("2. Visit city");
         out.println("3. Fight with random enemy!");
     }
-
-    public void skillsLearnMenu(Player player, boolean condition){
-        MageSkillSystem scream = MageSkillSystem.SCREAMBALL;
-        MageSkillSystem hate = MageSkillSystem.HATEWAVE;
-        out.println("Available skills:");
-        if((player.getLvl() >= 1) && (!condition)){
-            out.println(scream.name());
+    public void drawFightMenu(){
+        out.println("1. HIT");
+        out.println("2. USE ITEM");
+        out.println("3. ESCAPE");
+    }
+    public void drawSingleQuotes(String mode){
+        if(mode.equals("menu")){
+            out.println("Fight Begin!");
         }
-        if((player.getLvl() >= 3) && (!condition)){
-            out.println(hate.name());
+        if (mode.equals("decrease")){
+            out.println("Are You sure? Escaping from fight, decrease Your XP points!");
+        }
+        if(mode.equals("playerDead")){
+            out.println("Player is dead! Resurrection begins...");
+        }
+        if(mode.equals("enemyDead")){
+            out.println("You Win! Enemy is dead");
+        }
+    }
+    public void drawErrors(int value){
+        if(value == 0){
+            out.println("Wrong choose, try again!");
+        }if(value == 1){
+            out.println("You can USE only DIGITS!");
         }
     }
     public void drawCities(){

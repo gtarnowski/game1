@@ -1,52 +1,97 @@
 package com.company.Engine.GameSystem;
 
 import com.company.Engine.Enemy.Enemy;
-import com.company.Engine.GameSystem.Skills.MageSkillSystem;
+import com.company.Engine.GameSystem.Skills.ArcherSkills;
 import com.company.Engine.GameSystem.Skills.MageSkills;
+import com.company.Engine.GameSystem.Skills.WarriorSkills;
 import com.company.Engine.Player.Player;
+import com.company.Engine.Player.PlayerEvents;
+import com.company.Engine.Profession;
+import com.company.Gfx.Gfx;
 
-import static java.lang.System.err;
-import static java.lang.System.out;
+import static java.lang.System.getenv;
 import static java.lang.System.in;
+import static java.lang.System.out;
 
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Fight {
+    private MageSkills mageSkills = new MageSkills();
+    private WarriorSkills warriorSkills = new WarriorSkills();
+    private ArcherSkills archerSkills = new ArcherSkills();
+    private PlayerEvents events = new PlayerEvents();
+    private Gfx gfx = new Gfx();
 
-    short [] singleHit(Player player, Enemy enemy){
-        short playerHit = playerSingleHit(player);
-        short enemyHit = enemySingleHit(enemy);
-        usePlayerSpecifiedSkills(player);
-        player.setHp((short) (player.getHp() - enemyHit));
-        enemy.setHp((short) (enemy.getHp() - playerHit));
-        return ;
-    }
-
-    private void usePlayerSpecifiedSkills(Player player) {
+    public void initializeFight(Player player, Enemy enemy) {
+        out.println(player.getLvl() + " " + player.getHp() + " " + player.getName() + " " + player.getAttackMin());
         Scanner scanner = new Scanner(in);
-        player.showSkillsMap();
+        gfx.drawFightMenu();
+        int result = scanner.nextInt();
+        try {
+            if (result == 1) {
+                while ((player.getHp() > 0) && (enemy.getHp() > 0)) {
 
+                    short playerHit = playerAttack(player);
+                    short enemyHit = enemySingleHit(enemy);
 
+                    player.setHp((short) (player.getHp() - enemyHit));
+                    enemy.setHp((short) (enemy.getHp() - playerHit));
+                    out.println("Player attack with " + playerHit + " DAMAGE! " + player.getHp() + " HP left");
+                    out.println("Enemy attack with " + enemyHit + " DAMAGE!" + enemy.getHp() + " HP left");
 
-
-        try{
-            if(scanner.nextInt() == 1){
-                player.getSkills();
-            }else if(scanner.nextInt() == 2){
-
-            }else if(scanner.nextInt() == 3){
-
-            }else {
-                usePlayerSpecifiedSkills(player);
+                }
+            } else if (result == 2) {
+                events.useInventory();
+            } else if (result == 3) {
+                gfx.drawSingleQuotes("decrease");
+                String res = scanner.next();
+                if ((res.equals("y")) || (res.equals("Y"))) {
+                    events.decreasePlayerXp(player);
+                }
+            } else {
+                gfx.drawErrors(0);
             }
-
-        }catch (InputMismatchException ex ) {
-            usePlayerSpecifiedSkills(player);
-            out.println("Select class using digits!");
+        } catch (InputMismatchException ex) {
+            gfx.drawErrors(1);
+            initializeFight(player, enemy);
         }
 
+        if (player.getHp() <= 0) {
+            gfx.drawSingleQuotes("playerDead");
+            events.resurrection(player);
+        } else if (enemy.getHp() <= 0) {
+            gfx.drawSingleQuotes("enemyDead");
+            events.playerLevelUp(player);
+        }
+    }
+
+    private short playerAttack(Player player) {
+
+        if (player.getProf().contains(Profession.MAGE.name())) {
+            short[] attack = mageSkills.mageSkillsMenu(player);
+            if (attack != null) {
+                return playerSingleSkillHit(player, attack);
+            } else {
+                return playerSingleHit(player);
+            }
+        } else if (player.getProf().equals(Profession.WARRIOR.name())) {
+            short[] attack = mageSkills.mageSkillsMenu(player);
+            if (attack != null) {
+                return playerSingleSkillHit(player, attack);
+            } else {
+                return playerSingleHit(player);
+            }
+        } else if (player.getProf().equals(Profession.ARCHER.name())) {
+            short[] attack = mageSkills.mageSkillsMenu(player);
+            if (attack != null) {
+                return playerSingleSkillHit(player, attack);
+            } else {
+                return playerSingleHit(player);
+            }
+        }
+        return 0;
     }
 
 
@@ -55,50 +100,52 @@ public class Fight {
     //modifier = player max DMG - min DMG;
     //attackAverage = random form modifier;
     //finalPlayerHit = min DMG + attackAverage;
-    private short playerSingleHit(Player player){
+    private short playerSingleHit(Player player) {
         Random rand = new Random();
 
-        short playerAttack = 0;
-        short playerAttackAverage =0;
-        short playerAttackMultiplier =0;
+        short playerAttack;
+        short playerAttackAverage;
+        short playerAttackMultiplier;
 
         playerAttack = (short) (player.getAttackMax() - player.getAttackMin());
 
-        playerAttackAverage = (short) (rand.nextInt(playerAttack) +2 );
-//        out.println("playerAverage:" + playerAttackAverage);
+        playerAttackAverage = (short) (rand.nextInt(playerAttack) + 2);
 
         playerAttackMultiplier = (short) (player.getAttackMin() + playerAttackAverage);
-        out.println("PLAYER HIT:" +  playerAttackMultiplier);
 
         return playerAttackMultiplier;
     }
 
-    private short enemySingleHit(Enemy enemy){
+    private short enemySingleHit(Enemy enemy) {
         Random rand = new Random();
-        out.println("value :" + enemy.getAttackMin());
-        out.println("value :" + enemy.getAttackMax());
-        out.println("value :" + enemy.getLvl());
-        out.println("value :" + enemy.getHp());
-        out.println("value :" + enemy.getDef());
 
-
-
-        short enemyAttack = 0;
-        short enemyAttackAverage =0;
-        short enemyAttackMultiplier =0;
+        short enemyAttack;
+        short enemyAttackAverage;
+        short enemyAttackMultiplier;
 
         enemyAttack = (short) (enemy.getAttackMax() - enemy.getAttackMin());
 
-        enemyAttackAverage = (short) (rand.nextInt(enemyAttack) +2 );
-        out.println("value enemyAverage:" + enemyAttackAverage);
+        enemyAttackAverage = (short) (rand.nextInt(enemyAttack) + 2);
 
         enemyAttackMultiplier = (short) (enemy.getAttackMin() + enemyAttackAverage);
-        out.println("value ENEMY HIT:" + enemyAttackMultiplier);
 
         return enemyAttackMultiplier;
     }
-//    private void playerSkillUse(Player player){
-//        MageSkills skills = new MageSkills();
-//        skills.getSkill(player);
-//    }
+
+    private short playerSingleSkillHit(Player player, short[] skillHit) {
+        Random rand = new Random();
+        short playerAttack;
+        short playerMinAttackSummary = (short) (player.getAttackMin() + skillHit[1]);
+        short playerMaxAttackSummary = (short) (player.getAttackMax() + skillHit[0]);
+        short playerAttackAverage;
+        short playerAttackMultiplier;
+
+        playerAttack = (short) (playerMaxAttackSummary - playerMinAttackSummary);
+
+        playerAttackAverage = (short) (rand.nextInt(playerAttack) + 2);
+
+        playerAttackMultiplier = (short) (playerMinAttackSummary + playerAttackAverage);
+
+        return playerAttackMultiplier;
+    }
 }
