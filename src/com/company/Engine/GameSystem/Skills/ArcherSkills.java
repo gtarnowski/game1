@@ -27,13 +27,16 @@ public class ArcherSkills {
     public void skillsLearnMenu(Player player){
         player.setLvl((short)3);
         Scanner sc = new Scanner(in);
-        //TODO: skills.get nie moze byc nullem bo sypie ERR
+
+        //condition of lvl check
         if((player.getLvl() >= 1) && (player.getSkills(flameshot.name()).equals(false))){
             out.println("Skill: " + flameshot.name() + " is Available! Type '+' to learn");
             if(sc.next().equals("+")){
                 learnFlameShot(player);
             }
         }
+
+        //condition of lvl check
         if((player.getLvl() >= 3) && (player.getSkills(doublebolt.name()).equals(false))){
             out.println("Skill: " + doublebolt.name() +  " is Available! Type '+' to learn");
             if(sc.next().equals("+")){
@@ -61,14 +64,16 @@ public class ArcherSkills {
         return null;
     }
     private void learnFlameShot(Player player){
-        if((player.getSkillPoints() >=1)){
+        //condition of lvl and Skill point checked 2nd time Here
+        if((player.getLvl() >=1)&& (player.getSkillPoints() >=1)){
             player.setSkills(flameshot.name(),true);
         }else {
             out.println("Not enough skill points!");
         }
     }
     private void learnDoubleBolt(Player player){
-        if((player.getSkillPoints() >=3)){
+        //condition of lvl and Skill point checked 2nd time Here
+        if((player.getLvl() >=3) && (player.getSkillPoints() >=1)){
             player.setSkills(doublebolt.name(),true);
         }else {
             out.println("Not enough skill points!");

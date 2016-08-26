@@ -36,7 +36,7 @@ public class Gfx {
     public void drawFightMenu(){
         out.println("1. HIT");
         out.println("2. USE ITEM");
-        out.println("3. ESCAPE");
+        out.println("3. ESCAP+E");
     }
     public void drawSingleQuotes(String mode){
         if(mode.equals("menu")){

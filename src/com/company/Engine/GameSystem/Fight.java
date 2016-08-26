@@ -24,6 +24,7 @@ public class Fight {
     private PlayerEvents events = new PlayerEvents();
     private Gfx gfx = new Gfx();
 
+    //TODO: rozszeżyć system walki o możliwośc spudłowania przez Playera lub Moba
     public void initializeFight(Player player, Enemy enemy) {
         out.println(player.getLvl() + " " + player.getHp() + " " + player.getName() + " " + player.getAttackMin());
         Scanner scanner = new Scanner(in);
@@ -38,9 +39,16 @@ public class Fight {
 
                     player.setHp((short) (player.getHp() - enemyHit));
                     enemy.setHp((short) (enemy.getHp() - playerHit));
-                    out.println("Player attack with " + playerHit + " DAMAGE! " + player.getHp() + " HP left");
-                    out.println("Enemy attack with " + enemyHit + " DAMAGE!" + enemy.getHp() + " HP left");
-
+                    if (playerHit == 0 ) {
+                        out.println("Player MISSED! " + player.getHp() + " HP left");
+                    }else {
+                        out.println("Player attack with " + playerHit + " DAMAGE! " + player.getHp() + " HP left");
+                    }
+                    if(enemyHit == 0){
+                        out.println("ENEMY MISSED! " + enemy.getHp() + " HP left");
+                    }else {
+                        out.println("Enemy attack with " + enemyHit + " DAMAGE!" + enemy.getHp() + " HP left");
+                    }
                 }
             } else if (result == 2) {
                 events.useInventory();
@@ -63,10 +71,10 @@ public class Fight {
             events.resurrection(player);
         } else if (enemy.getHp() <= 0) {
             gfx.drawSingleQuotes("enemyDead");
-            events.playerLevelUp(player);
+            events.playerSuccessFightSummary(player,enemy);
         }
     }
-
+    //TODO: rozszeżyć system walki o możliwośc spudłowania przez Playera lub Moba
     private short playerAttack(Player player) {
 
         if (player.getProf().contains(Profession.MAGE.name())) {
@@ -77,14 +85,14 @@ public class Fight {
                 return playerSingleHit(player);
             }
         } else if (player.getProf().equals(Profession.WARRIOR.name())) {
-            short[] attack = mageSkills.mageSkillsMenu(player);
+            short[] attack = warriorSkills.warriorSkillsMenu(player);
             if (attack != null) {
                 return playerSingleSkillHit(player, attack);
             } else {
                 return playerSingleHit(player);
             }
         } else if (player.getProf().equals(Profession.ARCHER.name())) {
-            short[] attack = mageSkills.mageSkillsMenu(player);
+            short[] attack = archerSkills.archerSkillsMenu(player);
             if (attack != null) {
                 return playerSingleSkillHit(player, attack);
             } else {
@@ -108,11 +116,13 @@ public class Fight {
         short playerAttackMultiplier;
 
         playerAttack = (short) (player.getAttackMax() - player.getAttackMin());
-
         playerAttackAverage = (short) (rand.nextInt(playerAttack) + 2);
 
         playerAttackMultiplier = (short) (player.getAttackMin() + playerAttackAverage);
-
+        float missChance = rand.nextFloat();
+        if(missChance <= 0.10f){
+            playerAttackMultiplier = 0;
+        }
         return playerAttackMultiplier;
     }
 
@@ -129,14 +139,19 @@ public class Fight {
 
         enemyAttackMultiplier = (short) (enemy.getAttackMin() + enemyAttackAverage);
 
+        float missChance = rand.nextFloat();
+        if(missChance <= 0.10f){
+            enemyAttackMultiplier = 0;
+        }
+
         return enemyAttackMultiplier;
     }
 
     private short playerSingleSkillHit(Player player, short[] skillHit) {
         Random rand = new Random();
         short playerAttack;
-        short playerMinAttackSummary = (short) (player.getAttackMin() + skillHit[1]);
-        short playerMaxAttackSummary = (short) (player.getAttackMax() + skillHit[0]);
+        short playerMinAttackSummary = (short) (player.getAttackMin() + skillHit[0]);
+        short playerMaxAttackSummary = (short) (player.getAttackMax() + skillHit[1]);
         short playerAttackAverage;
         short playerAttackMultiplier;
 
@@ -146,6 +161,10 @@ public class Fight {
 
         playerAttackMultiplier = (short) (playerMinAttackSummary + playerAttackAverage);
 
+        float missChance = rand.nextFloat();
+        if(missChance <= 0.10f){
+            playerAttackMultiplier = 0;
+        }
         return playerAttackMultiplier;
     }
 }
