@@ -24,9 +24,7 @@ public class Fight {
     private PlayerEvents events = new PlayerEvents();
     private Gfx gfx = new Gfx();
 
-    //TODO: rozszeżyć system walki o możliwośc spudłowania przez Playera lub Moba
     public void initializeFight(Player player, Enemy enemy) {
-        out.println(player.getLvl() + " " + player.getHp() + " " + player.getName() + " " + player.getAttackMin());
         Scanner scanner = new Scanner(in);
         gfx.drawFightMenu();
         int result = scanner.nextInt();
@@ -74,7 +72,6 @@ public class Fight {
             events.playerSuccessFightSummary(player,enemy);
         }
     }
-    //TODO: rozszeżyć system walki o możliwośc spudłowania przez Playera lub Moba
     private short playerAttack(Player player) {
 
         if (player.getProf().contains(Profession.MAGE.name())) {

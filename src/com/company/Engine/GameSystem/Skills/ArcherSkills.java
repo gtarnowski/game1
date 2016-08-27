@@ -24,7 +24,7 @@ public class ArcherSkills {
             }
         }
     }
-    public void skillsLearnMenu(Player player){
+    public void archerSkillsLearnMenu(Player player){
         player.setLvl((short)3);
         Scanner sc = new Scanner(in);
 

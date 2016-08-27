@@ -32,11 +32,12 @@ public class Gfx {
         out.println("1. Explore the world");
         out.println("2. Visit city");
         out.println("3. Fight with random enemy!");
+        out.println("4. Player Info");
     }
     public void drawFightMenu(){
         out.println("1. HIT");
         out.println("2. USE ITEM");
-        out.println("3. ESCAP+E");
+        out.println("3. ESCAPE");
     }
     public void drawSingleQuotes(String mode){
         if(mode.equals("menu")){
@@ -61,5 +62,19 @@ public class Gfx {
     }
     public void drawCities(){
         String[] cities = {"Capitol","Amazons Temple", "Damned Camp", "Whorehouse"};
+    }
+
+    public void playerPromotionMenu(Player player) {
+        out.println("1. Spent lvl points (" + player.getLvlPoints() + ")");
+        out.println("2. Spent skills points (" + player.getSkillPoints() + ")");
+        out.println("3. Back <-");
+    }
+
+    public void showSpentPointsMenu() {
+        out.println("1. Add STR");
+        out.println("2. Add AGI");
+        out.println("3. Add VIT");
+        out.println("4. Add ENE");
+        out.println("5. BACK");
     }
 }

@@ -24,7 +24,7 @@ public class WarriorSkills {
             }
         }
     }
-    public void skillsLearnMenu(Player player){
+    public void warriorSkillsLearnMenu(Player player){
         player.setLvl((short)3);
         Scanner sc = new Scanner(in);
         //TODO: skills.get nie moze byc nullem bo sypie ERR

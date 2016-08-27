@@ -22,11 +22,10 @@ public class GameSys extends Fight{
 
     public void buildHero(){
         events.onCreatedPlayerEvents(player);
-        out.println(player.getGold());
-        game();
+        game(player);
     }
 
-    private void game() {
+    public void game(Player player) {
         Scanner scanner = new Scanner(in);
         String result = null;
 
@@ -36,28 +35,33 @@ public class GameSys extends Fight{
                 result = scanner.next();
                 if (result.equals("1")) {
                     //Method
-                    game();
+                    game(player);
                 } else if (result.equals("2")) {
                     //Method
-                    game();
+                    game(player);
                 } else if (result.equals("3")) {
-                    callFight();
+                    callFight(player);
+                }else if(result.equals("4")){
+                    PlayerEvents events = new PlayerEvents();
+                    events.spentPlayerAdvancePoints(player);
                 } else {
                     out.println("Select correct number!");
                 }
             } catch (InputMismatchException ex) {
                 out.println("Error: " + ex);
-                game();
+                game(player);
             }
         }
 
 
     }
-    private void callFight(){
+    private void callFight(Player player){
         //Enemy with Constructor. player.getLvl setting generated mob Attributes;
         //Chances should be "equals";
         Enemy enemy = new Enemy(player.getLvl());
         Fight fight = new Fight();
+        out.println("HP " + player.getHp() + " GOLD: " + player.getGold());
+        out.println("XP " + player.getXp() + " LVL: " + player.getLvl());
         fight.initializeFight(player,enemy);
     }
 }

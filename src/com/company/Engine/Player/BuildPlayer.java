@@ -37,7 +37,7 @@ public class BuildPlayer extends Player {
         buildCharacter();
         buildCharacterStats();
         try {
-            saveCharacterData();
+            saveCharacterData(player);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -125,25 +125,28 @@ public class BuildPlayer extends Player {
         }
     }
 
-    private void saveCharacterData() throws IOException {
+    private void saveCharacterData(Player defaultPlayer) throws IOException {
         PrintWriter writer = new PrintWriter("player.txt");
 
-        writer.println(helper.stringToHex(player.getProf()));
-        writer.println(helper.stringToHex(player.getName()));
+        writer.println(helper.stringToHex(defaultPlayer.getProf()));
+        writer.println(helper.stringToHex(defaultPlayer.getName()));
 
-        writer.println(helper.byteToHex((byte) player.getLvl()));
-        writer.println(helper.byteToHex((byte) player.getHp()));
-        writer.println(helper.byteToHex((byte) player.getMp()));
+        writer.println(helper.byteToHex((byte) defaultPlayer.getLvl()));
+        writer.println(helper.byteToHex((byte) defaultPlayer.getHp()));
+        writer.println(helper.byteToHex((byte) defaultPlayer.getMp()));
 
-        writer.println(helper.byteToHex((byte) player.getStr()));
-        writer.println(helper.byteToHex((byte) player.getAgi()));
-        writer.println(helper.byteToHex((byte) player.getVit()));
-        writer.println(helper.byteToHex((byte) player.getEne()));
+        writer.println(helper.byteToHex((byte) defaultPlayer.getStr()));
+        writer.println(helper.byteToHex((byte) defaultPlayer.getAgi()));
+        writer.println(helper.byteToHex((byte) defaultPlayer.getVit()));
+        writer.println(helper.byteToHex((byte) defaultPlayer.getEne()));
 
-        writer.println(helper.byteToHex((byte) player.getDef()));
+        writer.println(helper.byteToHex((byte) defaultPlayer.getDef()));
 
-        writer.println(helper.byteToHex((byte) player.getAttackMin()));
-        writer.println(helper.byteToHex((byte) player.getAttackMax()));
+        writer.println(helper.byteToHex((byte) defaultPlayer.getAttackMin()));
+        writer.println(helper.byteToHex((byte) defaultPlayer.getAttackMax()));
+
+        writer.println(helper.byteToHex((byte) defaultPlayer.getGold()));
+        writer.println(helper.byteToHex((byte) defaultPlayer.getXp()));
 
         writer.close();
     }

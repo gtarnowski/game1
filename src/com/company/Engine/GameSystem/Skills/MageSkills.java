@@ -21,7 +21,7 @@ public class MageSkills{
             }
         }
     }
-    public void skillsLearnMenu(Player player){
+    public void mageSkillsLearnMenu(Player player){
         player.setLvl((short)3);
         Scanner sc = new Scanner(in);
         //TODO: skills.get nie moze byc nullem bo sypie EXC

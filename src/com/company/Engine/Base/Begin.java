@@ -17,8 +17,6 @@ public class Begin {
     //Final player statistics loader
     public void loadCharacter(Player player){
         List<String> stats= new ArrayList<String>();
-        player.setGold((short)1000);
-        player.setXp((short) 154);
         loadCharacterStats(stats = helper.readStats("player.txt"),player);
     }
 
@@ -41,6 +39,8 @@ public class Begin {
         player.setAttackMin(helper.hexToByte(stats.get(10)));
         player.setAttackMax(helper.hexToByte(stats.get(11)));
 
+        player.setGold(helper.hexToByte(stats.get(12)));
+        player.setXp(helper.hexToByte(stats.get(13)));
     }
 
 }
