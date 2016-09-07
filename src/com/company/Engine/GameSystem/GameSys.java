@@ -1,7 +1,9 @@
 package com.company.Engine.GameSystem;
 
+import com.company.Engine.Base.Helper;
 import com.company.Engine.Enemy.Enemy;
 import com.company.Engine.GameSystem.Skills.MageSkills;
+import com.company.Engine.Items.ItemEvents;
 import com.company.Engine.Player.Player;
 import com.company.Engine.Player.PlayerEvents;
 import com.company.Gfx.Gfx;
@@ -44,7 +46,10 @@ public class GameSys extends Fight{
                 }else if(result.equals("4")){
                     PlayerEvents events = new PlayerEvents();
                     events.spentPlayerAdvancePoints(player);
-                } else {
+                }else if(result.equals("5")){
+                    ItemEvents itemEvents = new ItemEvents();
+                    itemEvents.readItems();
+                }else {
                     out.println("Select correct number!");
                 }
             } catch (InputMismatchException ex) {

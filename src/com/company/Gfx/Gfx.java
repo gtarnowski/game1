@@ -33,6 +33,7 @@ public class Gfx {
         out.println("2. Visit city");
         out.println("3. Fight with random enemy!");
         out.println("4. Player Info");
+        out.println("5. More");
     }
     public void drawFightMenu(){
         out.println("1. HIT");

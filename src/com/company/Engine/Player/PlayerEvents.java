@@ -58,7 +58,7 @@ public class PlayerEvents{
     }
 
     public void useInventory() {
-        //TODO: do declaration;
+
     }
     public void playerSuccessFightSummary(Player player, Enemy enemy){
         short xp = calulateXpAfterMobKilling(enemy);
