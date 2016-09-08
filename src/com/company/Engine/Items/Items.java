@@ -1,21 +1,22 @@
 package com.company.Engine.Items;
 
 
+import java.util.ArrayList;
+
 public class Items {
     private short id;
     private short drop;
-    private short [] params;
+    private ArrayList<Short> params;
 
     private String name;
     private String type;
 
-    public Items(short ID, String NAME, String TYPE, short []PARAMS, short DROP) {
+    public Items(short ID, String NAME, String TYPE, ArrayList<Short>PARAMS, short DROP) {
         id = ID;
         name = NAME;
         type = TYPE;
-        params [0]= PARAMS[0];
-        params [1]= PARAMS[1];
         drop = DROP;
+        params = PARAMS;
     }
 
     public void loadItemsDataFromFile() {
@@ -54,11 +55,12 @@ public class Items {
         this.type = type;
     }
 
-    public short[] getParams() {
+
+    public ArrayList<Short> getParams() {
         return params;
     }
 
-    public void setParams(short []params, short i, short j) {
-        this.params[i] = params[j];
+    public void setParams(ArrayList<Short> params) {
+        this.params = params;
     }
 }

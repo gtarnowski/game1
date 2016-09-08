@@ -47,18 +47,31 @@ public class Helper {
         ItemEvents itemEvents = new ItemEvents();
         try {
             reader = new BufferedReader(new FileReader(file));
-            String text = null;
+            String text = null
+                    ;
             while ((text = reader.readLine()) != null) {
-                out.println(text);
-                String[] strings = text.split(";");
-                String[] attr = strings[3].split("/");
 
-                short id = Short.parseShort(strings[0]);
-                String name = strings[1];
-                String type = strings[2];
-                short[] params = {Short.parseShort(attr[0]), Short.parseShort(attr[1])};
-                short drop = Short.parseShort(strings[4]);
+                String[] singleItem = text.split(";");
 
+
+
+                short id = Short.parseShort(singleItem[0]);
+                String name = singleItem[1];
+                String type = singleItem[2];
+
+
+                ArrayList<Short> params = new ArrayList<>();
+                if (singleItem[3].contains("/")) {
+                    short []attributes = new short[singleItem[3].split("/").length];
+                    for(int i : attributes ){
+                        params.add(Short.parseShort(String.valueOf(attributes[i])));
+                    }
+                } else {
+                    params.add(Short.parseShort(String.valueOf(singleItem[3])));
+                }
+
+
+                short drop = Short.parseShort(singleItem[4]);
 
                 itemEvents.createItemsData(id, name, type, params, drop);
             }
