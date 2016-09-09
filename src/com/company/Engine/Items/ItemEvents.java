@@ -17,7 +17,7 @@ public class ItemEvents {
 
     public void readItemsCollection(){
         for (Items items : itemsList) {
-            out.println(items.getName());
+            out.println(items.getType());
         }
 
     }

@@ -1,4 +1,4 @@
-1;Healing Potion;Consumable;25;20
-2;Mana Potion;Consumable;20;10
-3;Gold;Gold;0;50
-4;Wand;Weapon;4/8;20
+1/Healing Potion/Consumable/25/20
+2/Mana Potion/Consumable/20/10
+3/Gold/Gold/0/50
+4/Wand/Weapon/4-8/20

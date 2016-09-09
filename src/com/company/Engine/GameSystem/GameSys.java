@@ -32,6 +32,8 @@ public class GameSys extends Fight{
         String result = null;
 
         while (true){
+            out.println("HP " + player.getHp() + " GOLD: " + player.getGold());
+            out.println("XP " + player.getXp() + " LVL: " + player.getLvl());
             gfx.drawGameOptions();
             try {
                 result = scanner.next();
@@ -64,8 +66,7 @@ public class GameSys extends Fight{
         //Chances should be "equals";
         Enemy enemy = new Enemy(player.getLvl());
         Fight fight = new Fight();
-        out.println("HP " + player.getHp() + " GOLD: " + player.getGold());
-        out.println("XP " + player.getXp() + " LVL: " + player.getLvl());
-//        fight.initializeFight(player,enemy);
+
+        fight.initializeFight(player,enemy);
     }
 }

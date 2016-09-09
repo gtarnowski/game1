@@ -50,7 +50,7 @@ public class Helper {
             String text = null;
             while ((text = reader.readLine()) != null) {
                 //Split reader line
-                String[] singleItem = text.split(";");
+                String[] singleItem = text.split("/");
 
                 //Define ID
                 short id = Short.parseShort(singleItem[0]);
@@ -61,8 +61,8 @@ public class Helper {
 
                 //Define Params
                 ArrayList<Short> params = new ArrayList<>();
-                if (singleItem[3].contains("/")) {
-                    String[] attr = singleItem[3].split("/");
+                if (singleItem[3].contains("-")) {
+                    String[] attr = singleItem[3].split("-");
                     for (int i = 0; i < attr.length; i++) {
                         params.add(Short.parseShort(String.valueOf(attr[i])));
                     }

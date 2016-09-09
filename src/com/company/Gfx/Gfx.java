@@ -42,7 +42,7 @@ public class Gfx {
     }
     public void drawSingleQuotes(String mode){
         if(mode.equals("menu")){
-            out.println("Fight Begin!");
+            out.println("Fight OnCreated!");
         }
         if (mode.equals("decrease")){
             out.println("Are You sure? Escaping from fight, decrease Your XP points!");
