@@ -8,10 +8,8 @@ import java.util.List;
 
 import static java.lang.System.out;
 
-/**
- * Created by hexen on 09.08.16.
- */
-public class Begin {
+
+public class OnCreated {
     Helper helper = new Helper();
 
     //Final player statistics loader

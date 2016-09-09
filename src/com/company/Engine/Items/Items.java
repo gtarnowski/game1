@@ -12,11 +12,11 @@ public class Items {
     private String type;
 
     public Items(short ID, String NAME, String TYPE, ArrayList<Short>PARAMS, short DROP) {
-        id = ID;
-        name = NAME;
-        type = TYPE;
-        drop = DROP;
-        params = PARAMS;
+        this.id = ID;
+        this.name = NAME;
+        this.type = TYPE;
+        this.drop = DROP;
+        this.params = PARAMS;
     }
 
     public void loadItemsDataFromFile() {

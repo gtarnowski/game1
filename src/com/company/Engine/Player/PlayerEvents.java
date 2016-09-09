@@ -1,7 +1,7 @@
 package com.company.Engine.Player;
 
 
-import com.company.Engine.Base.Begin;
+import com.company.Engine.Base.OnCreated;
 import com.company.Engine.Enemy.Enemy;
 import com.company.Engine.GameSystem.GameSys;
 import com.company.Engine.GameSystem.Skills.ArcherSkills;
@@ -19,8 +19,8 @@ import static java.lang.System.in;
 public class PlayerEvents{
     Gfx gfx = new Gfx();
     public void onCreatedPlayerEvents(Player player){
-        Begin begin = new Begin();
-        begin.loadCharacter(player);
+        OnCreated onCreated = new OnCreated();
+        onCreated.loadCharacter(player);
 
         if(player.getProf().equals(Profession.MAGE.name())){
             MageSkills skills = new MageSkills();

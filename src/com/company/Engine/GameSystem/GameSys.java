@@ -47,8 +47,7 @@ public class GameSys extends Fight{
                     PlayerEvents events = new PlayerEvents();
                     events.spentPlayerAdvancePoints(player);
                 }else if(result.equals("5")){
-                    ItemEvents itemEvents = new ItemEvents();
-                    itemEvents.readItems();
+
                 }else {
                     out.println("Select correct number!");
                 }
@@ -67,6 +66,6 @@ public class GameSys extends Fight{
         Fight fight = new Fight();
         out.println("HP " + player.getHp() + " GOLD: " + player.getGold());
         out.println("XP " + player.getXp() + " LVL: " + player.getLvl());
-        fight.initializeFight(player,enemy);
+//        fight.initializeFight(player,enemy);
     }
 }

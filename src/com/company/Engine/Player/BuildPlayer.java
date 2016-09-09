@@ -1,18 +1,13 @@
 package com.company.Engine.Player;
 
 
-import com.company.Engine.Base.Begin;
+import com.company.Engine.Base.OnCreated;
 import com.company.Engine.Base.Helper;
-import com.company.Engine.GameSystem.Skills.MageSkillSystem;
-import com.company.Engine.GameSystem.Skills.MageSkills;
 import com.company.Engine.Profession;
 import com.company.Gfx.Gfx;
 
-import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -24,7 +19,7 @@ public class BuildPlayer extends Player {
 
     private Player player = new Player();
     private Gfx gfx = new Gfx();
-    private Begin begin = new Begin();
+    private OnCreated onCreated = new OnCreated();
     private Helper helper = new Helper();
     private Profession mage = Profession.MAGE;
     private Profession warr = Profession.WARRIOR;

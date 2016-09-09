@@ -1,14 +1,12 @@
 package com.company.Engine.Base;
 
 import com.company.Engine.Items.ItemEvents;
+import com.company.Engine.Items.Items;
 
 import javax.xml.bind.DatatypeConverter;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.lang.System.out;
 
 public class Helper {
 
@@ -40,41 +38,49 @@ public class Helper {
         return list;
     }
 
-    public List<String> loadItems(String fileName) {
+    public ArrayList loadItems(String fileName) {
         List<String> list = new ArrayList<String>();
+        ArrayList<Items> itemList = new ArrayList<>();
+
         File file = new File(fileName);
         BufferedReader reader = null;
-        ItemEvents itemEvents = new ItemEvents();
+
         try {
             reader = new BufferedReader(new FileReader(file));
-            String text = null
-                    ;
+            String text = null;
             while ((text = reader.readLine()) != null) {
-
+                //Split reader line
                 String[] singleItem = text.split(";");
 
-
-
+                //Define ID
                 short id = Short.parseShort(singleItem[0]);
+                //Define Name
                 String name = singleItem[1];
+                //Define Type
                 String type = singleItem[2];
 
-
+                //Define Params
                 ArrayList<Short> params = new ArrayList<>();
                 if (singleItem[3].contains("/")) {
-                    short []attributes = new short[singleItem[3].split("/").length];
-                    for(int i : attributes ){
-                        params.add(Short.parseShort(String.valueOf(attributes[i])));
+                    String[] attr = singleItem[3].split("/");
+                    for (int i = 0; i < attr.length; i++) {
+                        params.add(Short.parseShort(String.valueOf(attr[i])));
                     }
+
                 } else {
-                    params.add(Short.parseShort(String.valueOf(singleItem[3])));
+                    params.add(Short.parseShort(singleItem[3]));
                 }
 
-
+                //Define Drop
                 short drop = Short.parseShort(singleItem[4]);
 
-                itemEvents.createItemsData(id, name, type, params, drop);
+
+                //Add items to collection
+                itemList.add(new Items(id, name, type, params, drop));
             }
+
+            //Back to ItemEvents, with filled ArrayList
+            return itemList;
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -87,7 +93,7 @@ public class Helper {
 
             }
         }
-        return list;
+        return itemList;
     }
 
     //CONVERTERS:
