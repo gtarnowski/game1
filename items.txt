@@ -1,4 +1,7 @@
-1/Healing Potion/Consumable/25/20
-2/Mana Potion/Consumable/20/10
-3/Gold/Gold/0/50
-4/Wand/Weapon/4-8/20
+1/Healing Potion/useful/25/0.20
+2/Mana Potion/useful/20/0.10
+3/Gold/useful/0/0.50
+4/Wand/weapon/4-8/0.20
+5/Sword/weapon/5-7/0.20
+6/Bow/weapon/3-11/0.20
+7/Mail/armor/7/0.18

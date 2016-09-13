@@ -7,6 +7,7 @@ import com.company.Engine.GameSystem.GameSys;
 import com.company.Engine.GameSystem.Skills.ArcherSkills;
 import com.company.Engine.GameSystem.Skills.MageSkills;
 import com.company.Engine.GameSystem.Skills.WarriorSkills;
+import com.company.Engine.Items.Items;
 import com.company.Engine.Profession;
 import com.company.Gfx.Gfx;
 
@@ -170,6 +171,9 @@ public class PlayerEvents{
                 }else break;
             }
         }
+    }
+    public void settAtribiutesByWeapon(Player player, Items items){
+
     }
 
 

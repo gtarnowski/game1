@@ -72,7 +72,7 @@ public class Helper {
                 }
 
                 //Define Drop
-                short drop = Short.parseShort(singleItem[4]);
+                float drop = Float.parseFloat(singleItem[4]);
 
 
                 //Add items to collection
