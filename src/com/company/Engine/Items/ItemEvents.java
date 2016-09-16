@@ -4,12 +4,13 @@ import com.company.Engine.Base.Helper;
 import com.company.Engine.Player.Inventory;
 import com.company.Engine.Player.Player;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Scanner;
 
 import static java.lang.System.out;
+import static java.lang.System.in;
 
 public class ItemEvents {
     private ArrayList<Items> itemsList = new ArrayList<Items>();
@@ -30,8 +31,6 @@ public class ItemEvents {
     public void loadItems() {
         itemsList = helper.loadItems("items.txt");
         regroupItemsByLists();
-        readItemsCollection();
-        initializeRandomItemGenerator();
         inventory.checkFreeInventorySpace();
     }
 
@@ -49,25 +48,7 @@ public class ItemEvents {
         }
     }
 
-    public void readItemsCollection() {
-//        for (Items items : itemsList) {
-//            out.println(items.getType());
-//        }
-//        for (Items items2: usefuls){
-//            out.println(items2.getId());
-//        }
-//        for (Items items3: weapons){
-//            out.println(items3.getId());
-//        }
-//        for (Items items4: armors){
-//            out.println(items4.getId());
-//        }
-//        out.print(usefuls.size() + " " + weapons.size() + " " + armors.size() + " " + quests.size() + "\n");
-
-    }
-
-    public void initializeRandomItemGenerator() {
-        Player player = new Player();
+    public void initializeRandomItemGenerator(Player player) {
         player.setLvl((short) (1));
         if (player.getLvl() <= 5) {
             randomizeLowLvlItems(player, inventory);
@@ -77,39 +58,63 @@ public class ItemEvents {
     private void randomizeLowLvlItems(Player player, Inventory inventory) {
         Random rand = new Random();
         float randomDrop = rand.nextFloat();
-        ArrayList<Short> items = new ArrayList<Short>();
-        ArrayList<Short> luckyItems = new ArrayList<Short>();
-        if (randomDrop >= 0.50f) {
-            while (!inventory.getTempInventory()) {
-                short result = 0;
-                for (int i = 0; i < usefuls.size(); i++) {
-                    out.println("Iterator " + i);
-                    if (rand.nextInt() >= usefuls.get(i).getDrop()) {
-                        result = inventory.checkFreeInventorySpace();
-                        if (result != 0) {
-                            out.println("My inv  " + inventory.getSlot((short) i) + " ID " + usefuls.get(i).getId());
-                            luckyItems.add(usefuls.get(i).getId());
-                        }
-                    }
 
-                }
-                for (int i = 0; i < luckyItems.size(); i++) {
-                    out.println("My items: " +luckyItems.get(i));
-                }
-                int index = rand.nextInt(luckyItems.size());
-                out.println("Winner: " + luckyItems.get(index));
-                out.println("RESULT: " + result);
-                inventory.setSlot((short) (result - 1), luckyItems.get(index));
-                inventory.setTempInventory(true);
-            }
-            out.println("FullInventory: " + Arrays.toString(inventory.getFullInventory()));
-            out.println("My chance 50: " + randomDrop);
+        if (randomDrop >= 0.50f) {
+            out.println("1. i got lucky");
+            randomizeItemsByType(usefuls);
         }
         if (randomDrop >= 0.30f) {
-            out.println("My chance 30: " + randomDrop);
+            out.println("2. i got lucky");
+            randomizeItemsByType(weapons);
         }
         if (randomDrop >= 0.25f) {
-            out.println("My chance 25: " + randomDrop);
+            out.println("3. i got lucky");
+            randomizeItemsByType(armors);
         }
     }
+
+    private void randomizeItemsByType(ArrayList<Items> itemses) {
+        Random rand = new Random();
+        ArrayList<Short> receivedItems = new ArrayList<Short>();
+        do {
+            short result;
+            for (Items item : itemses) {
+                if (rand.nextInt() >= item.getDrop()) {
+                    receivedItems.add(item.getId());
+                }
+            }
+            if (receivedItems.size() > 0) {
+                Scanner sc = new Scanner(in);
+                int index = rand.nextInt(receivedItems.size());
+
+                out.println("Enemy dropped: " + findItemNameById(receivedItems.get(index), itemses));
+                out.println("Do you pick this?");
+
+                String res = sc.next();
+                if (res.equals("Y") || res.equals("y")) {
+                    result = inventory.checkFreeInventorySpace();
+                    if (inventory.getFreeSpace() > 0) {
+                        inventory.setSlot((short) (result - 1), receivedItems.get(index));
+                        inventory.setFreeSpace((short) (inventory.getFreeSpace() - 1));
+                    } else {
+                        out.println("You cannot pick this item. Inventory if full!");
+                    }
+                }
+                inventory.setTempInventory(true);
+            } else {
+                inventory.setTempInventory(false);
+            }
+        } while (!inventory.getTempInventory());
+
+    }
+
+    private String findItemNameById(Short id, ArrayList<Items> itemses) {
+        for (Items i : itemses) {
+            if (id == i.getId()) {
+                return i.getName();
+            }
+        }
+        return null;
+    }
+
 }

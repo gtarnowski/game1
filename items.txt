@@ -1,7 +1,8 @@
 1/Healing Potion/useful/25/0.20
 2/Mana Potion/useful/20/0.10
 3/Gold/useful/0/0.50
-4/Wand/weapon/4-8/0.20
-5/Sword/weapon/5-7/0.20
-6/Bow/weapon/3-11/0.20
-7/Mail/armor/7/0.18
+4/Test/useful/0/0.20
+6/Wand/weapon/4-8/0.20
+7/Sword/weapon/5-7/0.20
+8/Bow/weapon/3-11/0.20
+9/Mail/armor/7/0.18

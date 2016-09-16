@@ -4,6 +4,7 @@ import com.company.Engine.Enemy.Enemy;
 import com.company.Engine.GameSystem.Skills.ArcherSkills;
 import com.company.Engine.GameSystem.Skills.MageSkills;
 import com.company.Engine.GameSystem.Skills.WarriorSkills;
+import com.company.Engine.Items.ItemEvents;
 import com.company.Engine.Player.Player;
 import com.company.Engine.Player.PlayerEvents;
 import com.company.Engine.Profession;
@@ -23,6 +24,7 @@ public class Fight {
     private ArcherSkills archerSkills = new ArcherSkills();
     private PlayerEvents events = new PlayerEvents();
     private Gfx gfx = new Gfx();
+    private ItemEvents itemEvents = new ItemEvents();
 
     public void initializeFight(Player player, Enemy enemy) {
         Scanner scanner = new Scanner(in);
@@ -70,6 +72,7 @@ public class Fight {
         } else if (enemy.getHp() <= 0) {
             gfx.drawSingleQuotes("enemyDead");
             events.playerSuccessFightSummary(player,enemy);
+            itemEvents.initializeRandomItemGenerator(player);
         }
     }
     private short playerAttack(Player player) {

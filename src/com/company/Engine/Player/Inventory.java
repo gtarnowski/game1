@@ -2,9 +2,6 @@ package com.company.Engine.Player;
 
 import static java.lang.System.out;
 
-/**
- * Created by hexen on 9/12/16.
- */
 public class Inventory {
     private short [] slot = new short[6];
     private short freeSpace = 6;
@@ -45,5 +42,8 @@ public class Inventory {
             }
         }
         return index;
+    }
+    public void setBonusAttackForPlayer(Player player){
+
     }
 }
